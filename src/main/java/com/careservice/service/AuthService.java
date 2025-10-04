@@ -1,8 +1,6 @@
 package com.careservice.service;
 
-import com.careservice.dto.auth.AuthResponse;
-import com.careservice.dto.auth.LoginRequest;
-import com.careservice.dto.auth.RegisterRequest;
+import com.careservice.dto.auth.*;
 import com.careservice.entity.*;
 import com.careservice.repository.*;
 import com.careservice.security.JwtTokenProvider;
@@ -32,6 +30,116 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
     
+    /**
+     * Đăng ký tài khoản Khách hàng
+     */
+    @Transactional
+    public AuthResponse registerCustomer(CustomerRegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email đã được sử dụng!");
+        }
+        
+        // Tạo User
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFullName(request.getFullName());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setAddress(request.getAddress());
+        user.setEnabled(true);
+        user.setStatus(User.UserStatus.ACTIVE);
+        
+        // Gán role CUSTOMER
+        Set<Role> roles = new HashSet<>();
+        Role customerRole = roleRepository.findByName(Role.RoleName.ROLE_CUSTOMER)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyền Khách hàng"));
+        roles.add(customerRole);
+        user.setRoles(roles);
+        
+        User savedUser = userRepository.save(user);
+        
+        // Tạo Customer profile
+        Customer customer = new Customer();
+        customer.setUser(savedUser);
+        customer.setEmergencyContact(request.getEmergencyContactName());
+        customer.setEmergencyPhone(request.getEmergencyContactPhone());
+        customerRepository.save(customer);
+        
+        // Tạo JWT token
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.generateToken(authentication);
+        
+        List<String> roleNames = savedUser.getRoles().stream()
+                .map(role -> role.getName().name())
+                .collect(Collectors.toList());
+        
+        return new AuthResponse(jwt, savedUser.getId(), savedUser.getEmail(), 
+                savedUser.getFullName(), roleNames);
+    }
+    
+    /**
+     * Đăng ký tài khoản Chuyên viên chăm sóc
+     */
+    @Transactional
+    public AuthResponse registerCaregiver(CaregiverRegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email đã được sử dụng!");
+        }
+        
+        // Tạo User
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFullName(request.getFullName());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setAddress(request.getAddress());
+        user.setEnabled(true);
+        user.setStatus(User.UserStatus.PENDING_APPROVAL); // Chờ duyệt
+        
+        // Gán role CAREGIVER
+        Set<Role> roles = new HashSet<>();
+        Role caregiverRole = roleRepository.findByName(Role.RoleName.ROLE_CAREGIVER)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyền Chuyên viên"));
+        roles.add(caregiverRole);
+        user.setRoles(roles);
+        
+        User savedUser = userRepository.save(user);
+        
+        // Tạo Caregiver profile với thông tin bổ sung
+        Caregiver caregiver = new Caregiver();
+        caregiver.setUser(savedUser);
+        caregiver.setBio(request.getBio());
+        caregiver.setSkills(request.getSkills());
+        caregiver.setExperience(request.getYearsOfExperience() != null ? 
+            request.getYearsOfExperience() + " năm kinh nghiệm" : null);
+        caregiver.setIdCardNumber(request.getIdCardNumber());
+        caregiver.setCertificateUrls(request.getCertifications());
+        caregiver.setVerificationStatus(Caregiver.VerificationStatus.PENDING);
+        caregiver.setIsAvailable(false); // Chưa khả dụng cho đến khi được phê duyệt
+        caregiverRepository.save(caregiver);
+        
+        // Tạo JWT token
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.generateToken(authentication);
+        
+        List<String> roleNames = savedUser.getRoles().stream()
+                .map(role -> role.getName().name())
+                .collect(Collectors.toList());
+        
+        return new AuthResponse(jwt, savedUser.getId(), savedUser.getEmail(), 
+                savedUser.getFullName(), roleNames);
+    }
+    
+    /**
+     * Đăng ký chung (deprecated)
+     */
+    @Deprecated
     @Transactional
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -91,6 +199,9 @@ public class AuthService {
                 savedUser.getFullName(), roleNames);
     }
     
+    /**
+     * Đăng nhập
+     */
     public AuthResponse login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())

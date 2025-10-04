@@ -15,20 +15,21 @@ Authorization: Bearer <your-jwt-token>
 
 ## 1. Authentication APIs
 
-### 1.1 Register
-Đăng ký tài khoản mới (Customer hoặc Caregiver)
+### 1.1 Đăng ký Khách hàng
+Đăng ký tài khoản Khách hàng để đặt dịch vụ chăm sóc
 
-**Endpoint:** `POST /api/auth/register`
+**Endpoint:** `POST /api/auth/register/customer`
 
 **Request Body:**
 ```json
 {
-  "email": "user@example.com",
+  "email": "customer@example.com",
   "password": "password123",
-  "fullName": "Nguyen Van A",
+  "fullName": "Nguyễn Văn A",
   "phoneNumber": "0901234567",
-  "address": "123 Street, District, City",
-  "role": "CUSTOMER" // hoặc "CAREGIVER"
+  "address": "123 Đường ABC, Quận 1, TP.HCM",
+  "emergencyContactName": "Nguyễn Thị B",
+  "emergencyContactPhone": "0909876543"
 }
 ```
 
@@ -36,19 +37,78 @@ Authorization: Bearer <your-jwt-token>
 ```json
 {
   "success": true,
-  "message": "Registration successful",
+  "message": "Đăng ký thành công! Bạn có thể đặt dịch vụ ngay bây giờ.",
   "data": {
     "token": "eyJhbGciOiJIUzI1NiJ9...",
     "type": "Bearer",
     "id": 1,
-    "email": "user@example.com",
-    "fullName": "Nguyen Van A",
+    "email": "customer@example.com",
+    "fullName": "Nguyễn Văn A",
     "roles": ["ROLE_CUSTOMER"]
   }
 }
 ```
 
-### 1.2 Login
+**Validation:**
+- Email: Bắt buộc, phải hợp lệ
+- Password: Bắt buộc, tối thiểu 6 ký tự
+- Full Name: Bắt buộc, 2-100 ký tự
+- Phone Number: Bắt buộc, định dạng: 0xxxxxxxxx hoặc +84xxxxxxxxx
+
+---
+
+### 1.2 Đăng ký Chuyên viên chăm sóc
+Đăng ký tài khoản Chuyên viên chăm sóc để cung cấp dịch vụ
+
+**Endpoint:** `POST /api/auth/register/caregiver`
+
+**Request Body:**
+```json
+{
+  "email": "caregiver@example.com",
+  "password": "password123",
+  "fullName": "Trần Thị C",
+  "phoneNumber": "0912345678",
+  "address": "456 Đường XYZ, Quận 3, TP.HCM",
+  "bio": "Tôi có 5 năm kinh nghiệm chăm sóc người cao tuổi",
+  "skills": "Chăm sóc người già, điều dưỡng cơ bản, vật lý trị liệu",
+  "yearsOfExperience": 5,
+  "idCardNumber": "079123456789",
+  "certifications": "Chứng chỉ Điều dưỡng viên, Chứng chỉ Sơ cấp cứu"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Đăng ký thành công! Hồ sơ của bạn đang được xem xét. Chúng tôi sẽ liên hệ sớm.",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiJ9...",
+    "type": "Bearer",
+    "id": 2,
+    "email": "caregiver@example.com",
+    "fullName": "Trần Thị C",
+    "roles": ["ROLE_CAREGIVER"]
+  }
+}
+```
+
+**Validation:**
+- Email: Bắt buộc, phải hợp lệ
+- Password: Bắt buộc, tối thiểu 6 ký tự
+- Full Name: Bắt buộc, 2-100 ký tự
+- Phone Number: Bắt buộc, định dạng Việt Nam
+- Address: Bắt buộc
+- ID Card Number: Bắt buộc, 9-12 chữ số
+
+**Lưu ý:** 
+- Tài khoản Chuyên viên sẽ ở trạng thái `PENDING_APPROVAL` 
+- Admin cần phê duyệt trước khi Chuyên viên có thể nhận việc
+
+---
+
+### 1.3 Đăng nhập
 Đăng nhập vào hệ thống
 
 **Endpoint:** `POST /api/auth/login`
@@ -65,7 +125,7 @@ Authorization: Bearer <your-jwt-token>
 ```json
 {
   "success": true,
-  "message": "Login successful",
+  "message": "Đăng nhập thành công",
   "data": {
     "token": "eyJhbGciOiJIUzI1NiJ9...",
     "type": "Bearer",
@@ -74,6 +134,25 @@ Authorization: Bearer <your-jwt-token>
     "fullName": "System Administrator",
     "roles": ["ROLE_ADMIN"]
   }
+}
+```
+
+---
+
+### 1.4 Đăng ký (Legacy - Deprecated)
+⚠️ **Deprecated**: Sử dụng `/register/customer` hoặc `/register/caregiver` thay thế
+
+**Endpoint:** `POST /api/auth/register`
+
+**Request Body:**
+```json
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "fullName": "Nguyen Van A",
+  "phoneNumber": "0901234567",
+  "address": "123 Street, District, City",
+  "role": "CUSTOMER"
 }
 ```
 
