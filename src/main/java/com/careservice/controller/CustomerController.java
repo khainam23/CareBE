@@ -95,6 +95,7 @@ public class CustomerController {
     }
     
     @GetMapping("/caregivers")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ApiResponse<List<com.careservice.dto.caregiver.CaregiverDTO>>> getAvailableCaregivers() {
         try {
             List<com.careservice.dto.caregiver.CaregiverDTO> caregivers = caregiverService.getAvailableCaregivers();
@@ -105,6 +106,7 @@ public class CustomerController {
     }
     
     @GetMapping("/caregivers/{id}")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ApiResponse<com.careservice.dto.caregiver.CaregiverDTO>> getCaregiverById(@PathVariable Long id) {
         try {
             com.careservice.dto.caregiver.CaregiverDTO caregiver = caregiverService.getCaregiverById(id);
@@ -115,6 +117,7 @@ public class CustomerController {
     }
     
     @GetMapping("/caregivers/{id}/reviews")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ApiResponse<List<ReviewDTO>>> getCaregiverReviews(@PathVariable Long id) {
         try {
             List<ReviewDTO> reviews = reviewService.getCaregiverReviews(id);
