@@ -89,6 +89,27 @@ public class CaregiverService {
         caregiverRepository.save(caregiver);
     }
     
+    public java.util.Map<String, Object> getDashboardStats() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        
+        User user = userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        Caregiver caregiver = caregiverRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Caregiver profile not found"));
+        
+        java.util.Map<String, Object> stats = new java.util.HashMap<>();
+        stats.put("monthlyEarnings", caregiver.getTotalEarnings() != null ? caregiver.getTotalEarnings() : 0);
+        stats.put("earningsGrowth", 0.0);
+        stats.put("weeklyHours", 0);
+        stats.put("todayBookings", 0);
+        stats.put("upcomingAppointments", new java.util.ArrayList<>());
+        stats.put("recentPatients", new java.util.ArrayList<>());
+        
+        return stats;
+    }
+    
     private CaregiverDTO convertToDTO(Caregiver caregiver) {
         CaregiverDTO dto = new CaregiverDTO();
         dto.setId(caregiver.getId());

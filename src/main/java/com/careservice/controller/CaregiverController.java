@@ -27,6 +27,7 @@ public class CaregiverController {
     private final BookingService bookingService;
     private final ReviewService reviewService;
     private final SupportTicketService supportTicketService;
+    private final PaymentService paymentService;
     
     @GetMapping("/profile")
     public ResponseEntity<ApiResponse<CaregiverDTO>> getMyProfile() {
@@ -141,6 +142,26 @@ public class CaregiverController {
         try {
             List<SupportTicketDTO> tickets = supportTicketService.getUserTickets();
             return ResponseEntity.ok(ApiResponse.success("Support tickets retrieved successfully", tickets));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    @GetMapping("/payments")
+    public ResponseEntity<ApiResponse<List<com.careservice.dto.payment.PaymentDTO>>> getMyPayments() {
+        try {
+            List<com.careservice.dto.payment.PaymentDTO> payments = paymentService.getCaregiverPayments();
+            return ResponseEntity.ok(ApiResponse.success("Payments retrieved successfully", payments));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    @GetMapping("/dashboard/stats")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getDashboardStats() {
+        try {
+            Map<String, Object> stats = caregiverService.getDashboardStats();
+            return ResponseEntity.ok(ApiResponse.success("Dashboard stats retrieved successfully", stats));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }

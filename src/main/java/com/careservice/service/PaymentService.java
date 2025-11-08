@@ -116,6 +116,13 @@ public class PaymentService {
                 .collect(Collectors.toList());
     }
     
+    public List<PaymentDTO> getCaregiverPayments() {
+        return paymentRepository.findAll().stream()
+                .filter(payment -> payment.getBooking().getCaregiver() != null)
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    
     private String generateTransactionId() {
         return "TXN" + System.currentTimeMillis() + new Random().nextInt(10000);
     }
