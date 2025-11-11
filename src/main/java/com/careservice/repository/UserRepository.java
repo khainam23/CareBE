@@ -1,5 +1,6 @@
 package com.careservice.repository;
 
+import com.careservice.entity.Role;
 import com.careservice.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,8 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByStatus(User.UserStatus status);
     
     @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name = :roleName")
-    List<User> findByRoleName(String roleName);
+    List<User> findByRoleName(Role.RoleName roleName);
     
     @Query("SELECT COUNT(u) FROM User u JOIN u.roles r WHERE r.name = :roleName")
-    Long countByRoleName(String roleName);
+    Long countByRoleName(Role.RoleName roleName);
 }
