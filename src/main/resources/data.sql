@@ -60,3 +60,64 @@ ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
 (1, 4, 'Experienced caregiver with 5 years of experience in elderly care', 'Elderly care, Medical care, Companion services', '5 years in professional caregiving', '079123456789', 'APPROVED', true, 50000, 4.8, 25, 30, 15000000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+-- Insert Additional Caregiver Users
+-- Caregiver 2 (password: caregiver123)
+INSERT INTO users (id, email, password, full_name, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(5, 'caregiver2@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Le Van D', '0905234567', '789 Nguyen Trai, District 5, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+
+INSERT INTO user_roles (user_id, role_id) VALUES (5, 4)
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(2, 5, 'Chuyên chăm sóc trẻ em với 3 năm kinh nghiệm, có chứng chỉ sơ cứu', 'Child care, Housekeeping, Companion services', '3 years specializing in childcare and early childhood development', '079234567890', 'APPROVED', true, 45000, 4.6, 18, 22, 9800000, NOW(), NOW(), NOW())
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+-- Caregiver 3 (password: caregiver123)
+INSERT INTO users (id, email, password, full_name, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(6, 'caregiver3@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Pham Thi E', '0906234567', '321 Vo Van Tan, District 3, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+
+INSERT INTO user_roles (user_id, role_id) VALUES (6, 4)
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(3, 6, 'Y tá có kinh nghiệm 7 năm trong chăm sóc y tế tại nhà, chuyên về bệnh mãn tính', 'Medical care, Nursing care, Rehabilitation support', '7 years as registered nurse, specialized in home healthcare', '079345678901', 'APPROVED', true, 70000, 4.9, 42, 55, 38500000, NOW(), NOW(), NOW())
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+-- Caregiver 4 (password: caregiver123)
+INSERT INTO users (id, email, password, full_name, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(7, 'caregiver4@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Hoang Van F', '0907234567', '654 Ly Tu Trong, District 1, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+
+INSERT INTO user_roles (user_id, role_id) VALUES (7, 4)
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(4, 7, 'Chăm sóc người cao tuổi và hỗ trợ phục hồi chức năng, có kinh nghiệm 4 năm', 'Elderly care, Rehabilitation support, Companion services', '4 years in elderly care and rehabilitation therapy', '079456789012', 'APPROVED', true, 55000, 4.7, 32, 40, 22000000, NOW(), NOW(), NOW())
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+-- Caregiver 5 (password: caregiver123)
+INSERT INTO users (id, email, password, full_name, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(8, 'caregiver5@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Tran Thi G', '0908234567', '987 Pasteur, District 3, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+
+INSERT INTO user_roles (user_id, role_id) VALUES (8, 4)
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(5, 8, 'Chuyên viên chăm sóc đa năng với 6 năm kinh nghiệm, thành thạo nhiều loại dịch vụ', 'Elderly care, Child care, Housekeeping, Companion services', '6 years providing comprehensive care services', '079567890123', 'APPROVED', true, 60000, 4.8, 38, 48, 28800000, NOW(), NOW(), NOW())
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+-- Caregiver 6 (password: caregiver123) - Pending verification
+INSERT INTO users (id, email, password, full_name, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(9, 'caregiver6@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Nguyen Van H', '0909234567', '147 Tran Hung Dao, District 1, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+
+INSERT INTO user_roles (user_id, role_id) VALUES (9, 4)
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(6, 9, 'Người chăm sóc mới, đang chờ xác minh hồ sơ', 'Elderly care, Companion services', '2 years experience, recently joined platform', '079678901234', 'PENDING', false, 40000, 0.0, 0, 0, 0, NOW(), NOW(), NULL)
+ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
