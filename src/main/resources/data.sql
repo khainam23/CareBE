@@ -8,13 +8,14 @@ ON DUPLICATE KEY UPDATE name = VALUES(name);
 
 -- Insert Services
 INSERT INTO services (id, name, description, category, base_price, duration_minutes, is_active, created_at, updated_at) VALUES
-(1, 'Elderly Care', 'Professional care for elderly individuals including daily activities assistance', 'ELDERLY_CARE', 150000, 240, true, NOW(), NOW()),
-(2, 'Child Care', 'Qualified childcare services for children of all ages', 'CHILD_CARE', 120000, 240, true, NOW(), NOW()),
-(3, 'Medical Care', 'Medical care services including medication management and health monitoring', 'MEDICAL_CARE', 200000, 180, true, NOW(), NOW()),
-(4, 'Companion Services', 'Companionship and social interaction services', 'COMPANION', 100000, 180, true, NOW(), NOW()),
-(5, 'Housekeeping', 'Light housekeeping and meal preparation services', 'HOUSEKEEPING', 80000, 180, true, NOW(), NOW()),
-(6, 'Nursing Care', 'Professional nursing care services', 'NURSING', 250000, 240, true, NOW(), NOW()),
-(7, 'Rehabilitation Support', 'Post-surgery or injury rehabilitation support', 'REHABILITATION', 180000, 180, true, NOW(), NOW())
+(1, 'Chăm sóc người già', 'Dịch vụ chăm sóc chuyên nghiệp cho người cao tuổi, hỗ trợ sinh hoạt hàng ngày, vệ sinh cá nhân, và đồng hành', 'ELDERLY_CARE', 150000, 240, true, NOW(), NOW()),
+(2, 'Chăm sóc trẻ em', 'Dịch vụ chăm sóc trẻ em chuyên nghiệp cho mọi lứa tuổi', 'CHILD_CARE', 120000, 240, true, NOW(), NOW()),
+(3, 'Chăm sóc bệnh nhân sau phẫu thuật', 'Chăm sóc y tế chuyên nghiệp cho bệnh nhân sau phẫu thuật, bao gồm quản lý thuốc và theo dõi sức khỏe', 'MEDICAL_CARE', 200000, 180, true, NOW(), NOW()),
+(4, 'Chăm sóc người khó đi lại', 'Hỗ trợ di chuyển và chăm sóc cho người khó đi lại, người khuyết tật', 'MEDICAL_CARE', 180000, 240, true, NOW(), NOW()),
+(5, 'Dịch vụ đồng hành', 'Dịch vụ đồng hành và tương tác xã hội', 'COMPANION', 100000, 180, true, NOW(), NOW()),
+(6, 'Dọn dẹp nhà cửa', 'Dịch vụ dọn dẹp nhà cửa nhẹ nhàng và chuẩn bị bữa ăn', 'HOUSEKEEPING', 80000, 180, true, NOW(), NOW()),
+(7, 'Chăm sóc điều dưỡng', 'Dịch vụ chăm sóc điều dưỡng chuyên nghiệp', 'NURSING', 250000, 240, true, NOW(), NOW()),
+(8, 'Hỗ trợ phục hồi chức năng', 'Hỗ trợ phục hồi chức năng sau chấn thương hoặc phẫu thuật', 'REHABILITATION', 180000, 180, true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE name = VALUES(name);
 
 -- Insert Admin User (password: admin123)

@@ -3,10 +3,13 @@ package com.careservice.controller;
 import com.careservice.dto.ApiResponse;
 import com.careservice.dto.auth.*;
 import com.careservice.service.AuthService;
+import com.careservice.service.AdminService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     
     private final AuthService authService;
+    private final AdminService adminService;
     
     /**
      * Đăng ký tài khoản Khách hàng
@@ -73,6 +77,20 @@ public class AuthController {
         try {
             AuthResponse response = authService.login(request);
             return ResponseEntity.ok(ApiResponse.success("Đăng nhập thành công", response));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    /**
+     * Lấy danh sách dịch vụ (public - không cần đăng nhập)
+     * Endpoint: GET /api/auth/services
+     */
+    @GetMapping("/services")
+    public ResponseEntity<ApiResponse<List<com.careservice.dto.admin.ServiceDTO>>> getActiveServices() {
+        try {
+            List<com.careservice.dto.admin.ServiceDTO> services = adminService.getActiveServices();
+            return ResponseEntity.ok(ApiResponse.success("Services retrieved successfully", services));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }

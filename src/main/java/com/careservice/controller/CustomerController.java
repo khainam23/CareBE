@@ -30,6 +30,7 @@ public class CustomerController {
     private final ReviewService reviewService;
     private final SupportTicketService supportTicketService;
     private final CaregiverService caregiverService;
+    private final AdminService adminService;
     
     @PostMapping("/bookings")
     public ResponseEntity<ApiResponse<BookingDTO>> createBooking(@Valid @RequestBody BookingRequest request) {
@@ -142,6 +143,17 @@ public class CustomerController {
         try {
             List<SupportTicketDTO> tickets = supportTicketService.getUserTickets();
             return ResponseEntity.ok(ApiResponse.success("Support tickets retrieved successfully", tickets));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    @GetMapping("/services")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ApiResponse<List<com.careservice.dto.admin.ServiceDTO>>> getActiveServices() {
+        try {
+            List<com.careservice.dto.admin.ServiceDTO> services = adminService.getActiveServices();
+            return ResponseEntity.ok(ApiResponse.success("Services retrieved successfully", services));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }

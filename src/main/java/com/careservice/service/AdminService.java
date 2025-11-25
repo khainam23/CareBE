@@ -644,6 +644,13 @@ public class AdminService {
         serviceRepository.delete(service);
     }
     
+    public List<ServiceDTO> getActiveServices() {
+        return serviceRepository.findByIsActive(true)
+                .stream()
+                .map(this::convertServiceToDTO)
+                .collect(Collectors.toList());
+    }
+    
     private ServiceDTO convertServiceToDTO(com.careservice.entity.Service service) {
         return ServiceDTO.builder()
                 .id(service.getId())
