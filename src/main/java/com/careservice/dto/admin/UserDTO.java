@@ -22,4 +22,27 @@ public class UserDTO {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String avatarUrl;
+    private CaregiverProfileDTO caregiverProfile;
+    
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CaregiverProfileDTO {
+        private Long id;
+        private String bio;
+        private String skills;
+        private String experience;
+        private String idCardNumber;
+        private String idCardUrl;
+        private String certificateUrls;
+        private String verificationStatus;
+        private Boolean isAvailable;
+        private String availableSchedule;
+        private Double hourlyRate;
+        private Double rating;
+        private Integer totalReviews;
+        private Integer completedBookings;
+    }
 }

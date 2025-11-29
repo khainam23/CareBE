@@ -323,7 +323,7 @@ public class AdminService {
                 .map(role -> role.getName().name())
                 .collect(Collectors.toSet());
         
-        return UserDTO.builder()
+        UserDTO.UserDTOBuilder builder = UserDTO.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .fullName(user.getFullName())
@@ -333,7 +333,31 @@ public class AdminService {
                 .status(user.getStatus().name())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
-                .build();
+                .avatarUrl(user.getAvatarUrl());
+        
+        // Add caregiver profile if user is a caregiver
+        if (user.getCaregiver() != null) {
+            Caregiver caregiver = user.getCaregiver();
+            UserDTO.CaregiverProfileDTO caregiverProfile = UserDTO.CaregiverProfileDTO.builder()
+                    .id(caregiver.getId())
+                    .bio(caregiver.getBio())
+                    .skills(caregiver.getSkills())
+                    .experience(caregiver.getExperience())
+                    .idCardNumber(caregiver.getIdCardNumber())
+                    .idCardUrl(caregiver.getIdCardUrl())
+                    .certificateUrls(caregiver.getCertificateUrls())
+                    .verificationStatus(caregiver.getVerificationStatus().name())
+                    .isAvailable(caregiver.getIsAvailable())
+                    .availableSchedule(caregiver.getAvailableSchedule())
+                    .hourlyRate(caregiver.getHourlyRate().doubleValue())
+                    .rating(caregiver.getRating())
+                    .totalReviews(caregiver.getTotalReviews())
+                    .completedBookings(caregiver.getCompletedBookings())
+                    .build();
+            builder.caregiverProfile(caregiverProfile);
+        }
+        
+        return builder.build();
     }
     
     // ==================== Caregiver Management Methods ====================
