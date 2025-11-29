@@ -301,6 +301,20 @@ public class AdminService {
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        
+        // Unassign support tickets where this user is the assignee
+        List<SupportTicket> assignedTickets = supportTicketRepository.findByAssignedTo(user);
+        for (SupportTicket ticket : assignedTickets) {
+            ticket.setAssignedTo(null);
+            supportTicketRepository.save(ticket);
+        }
+        
+        // Delete support tickets created by this user
+        List<SupportTicket> createdTickets = supportTicketRepository.findByUser(user);
+        supportTicketRepository.deleteAll(createdTickets);
+        
+        // Notifications, Customer, and Caregiver profiles will be cascade deleted automatically
+        
         userRepository.delete(user);
     }
     

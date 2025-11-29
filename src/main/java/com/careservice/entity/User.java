@@ -54,6 +54,21 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
     
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Caregiver caregiver;
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Customer customer;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Notification> notifications = new HashSet<>();
+    
+    @OneToMany(mappedBy = "user")
+    private Set<SupportTicket> createdTickets = new HashSet<>();
+    
+    @OneToMany(mappedBy = "assignedTo")
+    private Set<SupportTicket> assignedTickets = new HashSet<>();
+    
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
