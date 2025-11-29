@@ -60,7 +60,8 @@ public class Payment {
         DEBIT_CARD,
         BANK_TRANSFER,
         E_WALLET,
-        CASH
+        CASH,
+        VNPAY
     }
     
     public enum PaymentStatus {
