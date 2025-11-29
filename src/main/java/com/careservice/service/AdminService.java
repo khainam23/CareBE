@@ -32,6 +32,7 @@ public class AdminService {
     private final RoleRepository roleRepository;
     private final NotificationService notificationService;
     private final PasswordEncoder passwordEncoder;
+    private final FileStorageService fileStorageService;
     
     public DashboardStatsDTO getDashboardStats() {
         DashboardStatsDTO stats = new DashboardStatsDTO();
@@ -146,6 +147,7 @@ public class AdminService {
         dto.setBio(caregiver.getBio());
         dto.setSkills(caregiver.getSkills());
         dto.setExperience(caregiver.getExperience());
+        dto.setExperienceYears(caregiver.getExperienceYears());
         dto.setIdCardNumber(caregiver.getIdCardNumber());
         dto.setIdCardUrl(caregiver.getIdCardUrl());
         dto.setCertificateUrls(caregiver.getCertificateUrls());
@@ -318,6 +320,37 @@ public class AdminService {
         userRepository.delete(user);
     }
     
+    @Transactional
+    public UserDTO uploadUserAvatar(Long userId, org.springframework.web.multipart.MultipartFile file, String imageSource) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        
+        try {
+            if ("local".equals(imageSource) && user.getCaregiver() != null) {
+                String fileName = file.getOriginalFilename();
+                user.getCaregiver().setAvatarImage(fileName);
+                user.getCaregiver().setImageSource("local");
+            } else {
+                String avatarUrl = fileStorageService.saveFile(file);
+                String oldAvatarUrl = user.getAvatarUrl();
+                user.setAvatarUrl(avatarUrl);
+                
+                if (user.getCaregiver() != null) {
+                    user.getCaregiver().setImageSource("url");
+                }
+                
+                if (oldAvatarUrl != null && !oldAvatarUrl.isEmpty()) {
+                    fileStorageService.deleteFile(oldAvatarUrl);
+                }
+            }
+            
+            User updatedUser = userRepository.save(user);
+            return convertUserToDTO(updatedUser);
+        } catch (java.io.IOException e) {
+            throw new RuntimeException("Failed to upload avatar: " + e.getMessage());
+        }
+    }
+    
     private UserDTO convertUserToDTO(User user) {
         Set<String> roleNames = user.getRoles().stream()
                 .map(role -> role.getName().name())
@@ -338,11 +371,16 @@ public class AdminService {
         // Add caregiver profile if user is a caregiver
         if (user.getCaregiver() != null) {
             Caregiver caregiver = user.getCaregiver();
+            builder.avatarImage(caregiver.getAvatarImage())
+                   .imageSource(caregiver.getImageSource());
             UserDTO.CaregiverProfileDTO caregiverProfile = UserDTO.CaregiverProfileDTO.builder()
                     .id(caregiver.getId())
                     .bio(caregiver.getBio())
                     .skills(caregiver.getSkills())
                     .experience(caregiver.getExperience())
+                    .experienceYears(caregiver.getExperienceYears())
+                    .avatarImage(caregiver.getAvatarImage())
+                    .imageSource(caregiver.getImageSource())
                     .idCardNumber(caregiver.getIdCardNumber())
                     .idCardUrl(caregiver.getIdCardUrl())
                     .certificateUrls(caregiver.getCertificateUrls())

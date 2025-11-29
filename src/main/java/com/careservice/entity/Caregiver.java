@@ -36,9 +36,15 @@ public class Caregiver {
     @Column(columnDefinition = "TEXT")
     private String experience;
     
+    private Integer experienceYears;
+    
     private String idCardNumber;
     
     private String idCardUrl;
+    
+    private String avatarImage;
+    
+    private String imageSource;
     
     @Column(columnDefinition = "TEXT")
     private String certificateUrls;

@@ -23,6 +23,8 @@ public class UserDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String avatarUrl;
+    private String avatarImage;
+    private String imageSource;
     private CaregiverProfileDTO caregiverProfile;
     
     @Data
@@ -34,6 +36,9 @@ public class UserDTO {
         private String bio;
         private String skills;
         private String experience;
+        private Integer experienceYears;
+        private String avatarImage;
+        private String imageSource;
         private String idCardNumber;
         private String idCardUrl;
         private String certificateUrls;

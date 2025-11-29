@@ -21,6 +21,7 @@ public class CaregiverDTO {
     private String bio;
     private String skills;
     private String experience;
+    private Integer experienceYears;
     private String idCardNumber;
     private String idCardUrl;
     private String certificateUrls;

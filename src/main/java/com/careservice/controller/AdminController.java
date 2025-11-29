@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -146,6 +147,19 @@ public class AdminController {
         try {
             adminService.deleteUser(id);
             return ResponseEntity.ok(ApiResponse.success("User deleted successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    @PostMapping("/users/{id}/avatar")
+    public ResponseEntity<ApiResponse<UserDTO>> uploadUserAvatar(
+            @PathVariable Long id,
+            @RequestParam("avatar") MultipartFile file,
+            @RequestParam(value = "imageSource", defaultValue = "url") String imageSource) {
+        try {
+            UserDTO user = adminService.uploadUserAvatar(id, file, imageSource);
+            return ResponseEntity.ok(ApiResponse.success("Avatar uploaded successfully", user));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }
