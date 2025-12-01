@@ -28,6 +28,7 @@ public class BookingService {
     private final ServiceRepository serviceRepository;
     private final UserRepository userRepository;
     private final NotificationService notificationService;
+    private final ChatService chatService;
     
     @Transactional
     public BookingDTO createBooking(BookingRequest request) {
@@ -128,6 +129,14 @@ public class BookingService {
         
         booking.setStatus(Booking.BookingStatus.CONFIRMED);
         Booking savedBooking = bookingRepository.save(booking);
+        
+        // Create chat room for confirmed booking
+        try {
+            chatService.createChatRoom(bookingId);
+        } catch (Exception e) {
+            // Log error but don't fail booking confirmation
+            System.err.println("Failed to create chat room: " + e.getMessage());
+        }
         
         notificationService.createNotification(
                 booking.getCustomer().getUser(),

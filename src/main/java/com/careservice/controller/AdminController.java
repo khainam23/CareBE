@@ -27,6 +27,7 @@ import java.util.Map;
 public class AdminController {
     
     private final AdminService adminService;
+    private final com.careservice.service.ChatService chatService;
     
     @GetMapping("/dashboard/stats")
     public ResponseEntity<ApiResponse<DashboardStatsDTO>> getDashboardStats() {
@@ -429,6 +430,30 @@ public class AdminController {
         try {
             adminService.deleteReview(id);
             return ResponseEntity.ok(ApiResponse.success("Review deleted successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    // ==================== Chat Management Endpoints ====================
+
+    @GetMapping("/chat/rooms/{roomId}/messages")
+    public ResponseEntity<ApiResponse<Page<com.careservice.dto.chat.ChatMessageDTO>>> getChatHistory(
+            @PathVariable Long roomId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @org.springframework.security.core.annotation.AuthenticationPrincipal com.careservice.security.UserPrincipal userPrincipal) {
+        try {
+            // Log access
+            System.out.println("Admin/Support user " + userPrincipal.getUsername() + " accessed chat room " + roomId);
+            
+            // We need a method in ChatService that allows admin access (skips participant check)
+            // For now, we might need to add a specific method in ChatService or modify getMessageHistory
+            // But getMessageHistory checks for participant.
+            // So let's add getAdminMessageHistory to ChatService.
+            
+            Page<com.careservice.dto.chat.ChatMessageDTO> messages = chatService.getAdminMessageHistory(roomId, page, size);
+            return ResponseEntity.ok(ApiResponse.success("Chat history retrieved successfully", messages));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }

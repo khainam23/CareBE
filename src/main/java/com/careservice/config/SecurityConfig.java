@@ -62,10 +62,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/customer/caregivers/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()  // WebSocket endpoint
                         .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "SUPPORT")
                         .requestMatchers("/api/support/**").hasAnyRole("SUPPORT", "ADMIN")
                         .requestMatchers("/api/customer/**").hasAnyRole("CUSTOMER", "ADMIN")
                         .requestMatchers("/api/caregiver/**").hasAnyRole("CAREGIVER", "ADMIN")
+                        .requestMatchers("/api/chat/**").hasAnyRole("CUSTOMER", "CAREGIVER", "ADMIN")
                         .anyRequest().authenticated()
                 );
         
