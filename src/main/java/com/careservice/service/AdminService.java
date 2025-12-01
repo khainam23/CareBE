@@ -33,6 +33,7 @@ public class AdminService {
     private final NotificationService notificationService;
     private final PasswordEncoder passwordEncoder;
     private final FileStorageService fileStorageService;
+    private final ReviewRepository reviewRepository;
     
     public DashboardStatsDTO getDashboardStats() {
         DashboardStatsDTO stats = new DashboardStatsDTO();
@@ -739,5 +740,64 @@ public class AdminService {
                 .createdAt(service.getCreatedAt())
                 .updatedAt(service.getUpdatedAt())
                 .build();
+    }
+    
+    // ==================== Review Management Methods ====================
+    
+    public Page<com.careservice.dto.review.ReviewDTO> getAllReviews(Pageable pageable) {
+        return reviewRepository.findAll(pageable)
+                .map(this::convertReviewToDTO);
+    }
+    
+    public List<com.careservice.dto.review.ReviewDTO> getAllReviewsList() {
+        return reviewRepository.findAll().stream()
+                .map(this::convertReviewToDTO)
+                .collect(Collectors.toList());
+    }
+    
+    public com.careservice.dto.review.ReviewDTO getReviewById(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found with id: " + id));
+        return convertReviewToDTO(review);
+    }
+    
+    @Transactional
+    public void deleteReview(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found with id: " + id));
+        
+        Caregiver caregiver = review.getCaregiver();
+        reviewRepository.delete(review);
+        
+        // Update caregiver rating after deletion
+        updateCaregiverRating(caregiver);
+    }
+    
+    @Transactional
+    private void updateCaregiverRating(Caregiver caregiver) {
+        Double averageRating = reviewRepository.getAverageRatingByCaregiver(caregiver.getId());
+        Long totalReviews = reviewRepository.countByCaregiver(caregiver.getId());
+        
+        caregiver.setRating(averageRating != null ? averageRating : 0.0);
+        caregiver.setTotalReviews(totalReviews != null ? totalReviews.intValue() : 0);
+        
+        caregiverRepository.save(caregiver);
+    }
+    
+    private com.careservice.dto.review.ReviewDTO convertReviewToDTO(Review review) {
+        com.careservice.dto.review.ReviewDTO dto = new com.careservice.dto.review.ReviewDTO();
+        dto.setId(review.getId());
+        dto.setBookingId(review.getBooking().getId());
+        dto.setBookingCode(review.getBooking().getBookingCode());
+        dto.setCustomerId(review.getCustomer().getId());
+        dto.setCustomerName(review.getCustomer().getUser().getFullName());
+        dto.setCaregiverId(review.getCaregiver().getId());
+        dto.setCaregiverName(review.getCaregiver().getUser().getFullName());
+        dto.setRating(review.getRating());
+        dto.setComment(review.getComment());
+        dto.setCaregiverResponse(review.getCaregiverResponse());
+        dto.setRespondedAt(review.getRespondedAt());
+        dto.setCreatedAt(review.getCreatedAt());
+        return dto;
     }
 }

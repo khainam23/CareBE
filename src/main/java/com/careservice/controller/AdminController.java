@@ -23,7 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
 public class AdminController {
     
     private final AdminService adminService;
@@ -48,6 +48,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PutMapping("/caregivers/{id}/approve")
     public ResponseEntity<ApiResponse<CaregiverDTO>> approveCaregiver(@PathVariable Long id) {
         try {
@@ -58,6 +59,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PutMapping("/caregivers/{id}/reject")
     public ResponseEntity<ApiResponse<CaregiverDTO>> rejectCaregiver(
             @PathVariable Long id,
@@ -71,6 +73,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PutMapping("/users/{id}/suspend")
     public ResponseEntity<ApiResponse<Void>> suspendUser(@PathVariable Long id) {
         try {
@@ -81,6 +84,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PutMapping("/users/{id}/activate")
     public ResponseEntity<ApiResponse<Void>> activateUser(@PathVariable Long id) {
         try {
@@ -119,6 +123,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PostMapping("/users")
     public ResponseEntity<ApiResponse<UserDTO>> createUser(@Valid @RequestBody CreateUserRequest request) {
         try {
@@ -130,6 +135,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PutMapping("/users/{id}")
     public ResponseEntity<ApiResponse<UserDTO>> updateUser(
             @PathVariable Long id,
@@ -142,6 +148,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable Long id) {
         try {
@@ -193,6 +200,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PostMapping("/caregivers")
     public ResponseEntity<ApiResponse<CaregiverDTO>> createCaregiver(@Valid @RequestBody CreateUserRequest request) {
         try {
@@ -204,6 +212,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PutMapping("/caregivers/{id}")
     public ResponseEntity<ApiResponse<CaregiverDTO>> updateCaregiver(
             @PathVariable Long id,
@@ -216,6 +225,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @DeleteMapping("/caregivers/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteCaregiver(@PathVariable Long id) {
         try {
@@ -328,6 +338,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PostMapping("/services")
     public ResponseEntity<ApiResponse<ServiceDTO>> createService(@Valid @RequestBody CreateServiceRequest request) {
         try {
@@ -339,6 +350,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PutMapping("/services/{id}")
     public ResponseEntity<ApiResponse<ServiceDTO>> updateService(
             @PathVariable Long id,
@@ -351,6 +363,7 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @PutMapping("/services/{id}/toggle")
     public ResponseEntity<ApiResponse<ServiceDTO>> toggleServiceStatus(@PathVariable Long id) {
         try {
@@ -361,11 +374,61 @@ public class AdminController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')")
     @DeleteMapping("/services/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteService(@PathVariable Long id) {
         try {
             adminService.deleteService(id);
             return ResponseEntity.ok(ApiResponse.success("Service deleted successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    // ==================== Review Management Endpoints ====================
+    
+    @GetMapping("/reviews")
+    public ResponseEntity<ApiResponse<Page<com.careservice.dto.review.ReviewDTO>>> getAllReviews(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "DESC") String sortDir) {
+        try {
+            Sort sort = sortDir.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Page<com.careservice.dto.review.ReviewDTO> reviews = adminService.getAllReviews(pageable);
+            return ResponseEntity.ok(ApiResponse.success("Reviews retrieved successfully", reviews));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    @GetMapping("/reviews/list")
+    public ResponseEntity<ApiResponse<List<com.careservice.dto.review.ReviewDTO>>> getAllReviewsList() {
+        try {
+            List<com.careservice.dto.review.ReviewDTO> reviews = adminService.getAllReviewsList();
+            return ResponseEntity.ok(ApiResponse.success("Reviews retrieved successfully", reviews));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    @GetMapping("/reviews/{id}")
+    public ResponseEntity<ApiResponse<com.careservice.dto.review.ReviewDTO>> getReviewById(@PathVariable Long id) {
+        try {
+            com.careservice.dto.review.ReviewDTO review = adminService.getReviewById(id);
+            return ResponseEntity.ok(ApiResponse.success("Review retrieved successfully", review));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/reviews/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteReview(@PathVariable Long id) {
+        try {
+            adminService.deleteReview(id);
+            return ResponseEntity.ok(ApiResponse.success("Review deleted successfully"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }
