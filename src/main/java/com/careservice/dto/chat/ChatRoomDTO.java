@@ -24,4 +24,10 @@ public class ChatRoomDTO {
     private LocalDateTime lastMessageAt;
     private String lastMessagePreview;
     private long unreadCount;
+    
+    private String serviceName;
+    private LocalDateTime scheduledStartTime;
+    private LocalDateTime scheduledEndTime;
+    private String location;
+    private String bookingStatus;
 }

@@ -21,3 +21,4 @@ USE care_service_db;
 -- CREATE INDEX idx_customer_addresses_user_id ON customer_addresses(user_id);
 -- CREATE INDEX idx_customer_addresses_is_default ON customer_addresses(is_default);
 
+ALTER TABLE payments MODIFY COLUMN payment_method VARCHAR(20);

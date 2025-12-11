@@ -6,6 +6,7 @@ import com.careservice.entity.Booking;
 import com.careservice.entity.Payment;
 import com.careservice.repository.BookingRepository;
 import com.careservice.repository.PaymentRepository;
+import com.careservice.util.VNPayDebugUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,40 +46,71 @@ public class VNPayService {
     
     @Transactional
     public VNPayResponse generatePaymentUrl(VNPayRequest request) {
-        Booking booking = bookingRepository.findById(request.getBookingId())
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
-        
-        // Check if payment already exists
-        if (paymentRepository.findByBooking(booking).isPresent()) {
-            throw new RuntimeException("Payment already exists for this booking");
-        }
-        
-        // Create payment record
-        Payment payment = new Payment();
-        String transactionId = generateTransactionId();
-        payment.setTransactionId(transactionId);
-        payment.setBooking(booking);
-        payment.setAmount(booking.getTotalPrice());
-        payment.setPaymentMethod(Payment.PaymentMethod.VNPAY);
-        payment.setStatus(Payment.PaymentStatus.PENDING);
-        payment.setNotes(request.getNotes());
-        
-        Payment savedPayment = paymentRepository.save(payment);
-        
-        // Generate VNPay URL
-        String paymentUrl = buildVNPayUrl(savedPayment);
-        
-        return VNPayResponse.builder()
-                .paymentUrl(paymentUrl)
-                .transactionId(transactionId)
-                .bookingId(booking.getId())
-                .amount(booking.getTotalPrice().longValue())
-                .orderInfo("Booking payment for booking code: " + booking.getBookingCode())
-                .createTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
-                .build();
+        return generatePaymentUrl(request, "127.0.0.1"); // Default IP for local testing
     }
     
-    private String buildVNPayUrl(Payment payment) {
+    @Transactional
+    public VNPayResponse generatePaymentUrl(VNPayRequest request, String ipAddress) {
+        try {
+            log.info("=== Generating VNPay URL ===");
+            log.info("Booking ID: {}", request.getBookingId());
+            
+            Booking booking = bookingRepository.findById(request.getBookingId())
+                    .orElseThrow(() -> new RuntimeException("Booking not found with ID: " + request.getBookingId()));
+            
+            log.debug("Found booking: {} with total price: {}", booking.getId(), booking.getTotalPrice());
+            
+            // Check if payment already exists
+            if (paymentRepository.findByBooking(booking).isPresent()) {
+                log.warn("Payment already exists for booking: {}", booking.getId());
+                throw new RuntimeException("Thanh toán đã tồn tại cho đặt lịch này");
+            }
+            
+            // Validate configuration
+            if (tmnCode == null || tmnCode.trim().isEmpty()) {
+                throw new RuntimeException("VNPay TMN Code chưa được cấu hình");
+            }
+            if (hashSecret == null || hashSecret.trim().isEmpty()) {
+                throw new RuntimeException("VNPay Hash Secret chưa được cấu hình");
+            }
+            if (apiUrl == null || apiUrl.trim().isEmpty()) {
+                throw new RuntimeException("VNPay API URL chưa được cấu hình");
+            }
+            
+            log.info("VNPay Config - TMN: {}, HashSecret length: {}", tmnCode, hashSecret.length());
+            
+            // Create payment record
+            Payment payment = new Payment();
+            String transactionId = generateTransactionId();
+            payment.setTransactionId(transactionId);
+            payment.setBooking(booking);
+            payment.setAmount(booking.getTotalPrice());
+            payment.setPaymentMethod(Payment.PaymentMethod.VNPAY);
+            payment.setStatus(Payment.PaymentStatus.PENDING);
+            payment.setNotes(request.getNotes());
+            
+            Payment savedPayment = paymentRepository.save(payment);
+            log.debug("Payment created with transaction ID: {}", transactionId);
+            
+            // Generate VNPay URL
+            String paymentUrl = buildVNPayUrl(savedPayment, ipAddress);
+            log.info("VNPay URL generated successfully - URL length: {} chars", paymentUrl.length());
+            
+            return VNPayResponse.builder()
+                    .paymentUrl(paymentUrl)
+                    .transactionId(transactionId)
+                    .bookingId(booking.getId())
+                    .amount(booking.getTotalPrice().longValue())
+                    .orderInfo("Booking payment for booking code " + booking.getBookingCode())
+                    .createTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
+                    .build();
+        } catch (Exception e) {
+            log.error("Error generating VNPay URL for booking: {}", request.getBookingId(), e);
+            throw e;
+        }
+    }
+    
+    private String buildVNPayUrl(Payment payment, String ipAddress) {
         Map<String, String> vnpParams = new TreeMap<>();
         vnpParams.put("vnp_Version", "2.1.0");
         vnpParams.put("vnp_Command", "pay");
@@ -86,9 +118,13 @@ public class VNPayService {
         vnpParams.put("vnp_Locale", "vn");
         vnpParams.put("vnp_CurrCode", "VND");
         vnpParams.put("vnp_TxnRef", payment.getTransactionId());
-        vnpParams.put("vnp_OrderInfo", "Booking payment: " + payment.getBooking().getBookingCode());
+        vnpParams.put("vnp_OrderInfo", "Booking payment " + payment.getBooking().getBookingCode());
         vnpParams.put("vnp_OrderType", "other");
-        vnpParams.put("vnp_Amount", String.valueOf(payment.getAmount().longValue() * 100));
+        vnpParams.put("vnp_IpAddr", ipAddress);
+        
+        long amountInCents = payment.getAmount().longValue() * 100;
+        vnpParams.put("vnp_Amount", String.valueOf(amountInCents));
+        
         vnpParams.put("vnp_ReturnUrl", returnUrl);
         vnpParams.put("vnp_NotifyUrl", notifyUrl);
         
@@ -96,10 +132,31 @@ public class VNPayService {
         vnpParams.put("vnp_CreateDate", createDate);
         vnpParams.put("vnp_ExpireDate", getExpireDate(createDate));
         
-        String queryString = buildQueryString(vnpParams);
-        String vnpSecureHash = hmacSHA512(hashSecret, queryString);
+        log.info("=== VNPay URL Building Debug ===");
+        log.info("Amount: {} VND (in cents: {})", payment.getAmount(), amountInCents);
+        log.info("TMN Code: {}", tmnCode);
+        log.info("Hash Secret Length: {}", hashSecret.length());
+        log.info("Return URL: {}", returnUrl);
+        log.info("Notify URL: {}", notifyUrl);
+        log.info("Order Info: {}", vnpParams.get("vnp_OrderInfo"));
+        log.info("Transaction Ref: {}", payment.getTransactionId());
         
-        return apiUrl + "?" + queryString + "&vnp_SecureHash=" + vnpSecureHash;
+        // Log all parameters before building query string
+        log.info("All VNPay Parameters:");
+        vnpParams.forEach((key, value) -> log.info("  {} = {}", key, value));
+        
+        String queryString = buildQueryString(vnpParams);
+        log.info("Query String (first 200 chars): {}", queryString.substring(0, Math.min(200, queryString.length())));
+        log.info("Query String (full length): {} chars", queryString.length());
+        
+        String vnpSecureHash = hmacSHA512(hashSecret, queryString);
+        log.info("Generated Signature: {}", vnpSecureHash);
+        
+        String paymentUrl = apiUrl + "?" + queryString + "&vnp_SecureHash=" + vnpSecureHash;
+        log.info("Final Payment URL length: {} chars", paymentUrl.length());
+        log.info("Payment URL (first 200 chars): {}", paymentUrl.substring(0, Math.min(200, paymentUrl.length())));
+        
+        return paymentUrl;
     }
     
     private String buildQueryString(Map<String, String> params) {
@@ -109,7 +166,7 @@ public class VNPayService {
                 result.append("&");
             }
             try {
-                result.append(key).append("=").append(java.net.URLEncoder.encode(value, StandardCharsets.UTF_8.toString()));
+                result.append(key).append("=").append(java.net.URLEncoder.encode(value, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 log.error("Error encoding query string", e);
             }
@@ -136,10 +193,36 @@ public class VNPayService {
         }
     }
     
+    private boolean verifyVNPaySignature(Map<String, String> params, String vnpSecureHash) {
+        Map<String, String> signParams = new TreeMap<>(params);
+        signParams.remove("vnp_SecureHash");
+        signParams.remove("vnp_SecureHashType");
+        
+        String queryString = buildQueryString(signParams);
+        String calculatedHash = hmacSHA512(hashSecret, queryString);
+        
+        boolean isValid = calculatedHash.equals(vnpSecureHash);
+        if (!isValid) {
+            log.warn("VNPay signature mismatch. Calculated: {}, Received: {}", calculatedHash, vnpSecureHash);
+        }
+        return isValid;
+    }
+    
     @Transactional
     public void handleVNPayReturn(Map<String, String> params) {
         String vnpResponseCode = params.get("vnp_ResponseCode");
         String txnRef = params.get("vnp_TxnRef");
+        String vnpSecureHash = params.get("vnp_SecureHash");
+        
+        if (vnpSecureHash == null) {
+            log.error("Missing vnp_SecureHash in VNPay response");
+            throw new RuntimeException("Invalid VNPay response: missing signature");
+        }
+        
+        if (!verifyVNPaySignature(params, vnpSecureHash)) {
+            log.error("Invalid VNPay signature for transaction: {}", txnRef);
+            throw new RuntimeException("Invalid VNPay response: signature verification failed");
+        }
         
         Payment payment = paymentRepository.findByTransactionId(txnRef)
                 .orElseThrow(() -> new RuntimeException("Payment not found for transaction: " + txnRef));

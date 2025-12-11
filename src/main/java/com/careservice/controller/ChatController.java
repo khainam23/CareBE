@@ -4,7 +4,6 @@ import com.careservice.dto.chat.ChatMessageDTO;
 import com.careservice.dto.chat.SendMessageRequest;
 import com.careservice.dto.chat.TypingIndicatorMessage;
 import com.careservice.entity.ChatMessage.SenderType;
-import com.careservice.entity.User.Role;
 import com.careservice.security.UserPrincipal;
 import com.careservice.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -31,10 +30,10 @@ public class ChatController {
                            @AuthenticationPrincipal UserPrincipal userPrincipal) {
         try {
             Long senderId = userPrincipal.getId();
-            Role role = userPrincipal.getRole();
+            String roleName = userPrincipal.getRoleName();
             
             // Determine sender type based on role
-            SenderType senderType = (role == Role.CUSTOMER) ? SenderType.CUSTOMER : SenderType.CAREGIVER;
+            SenderType senderType = (roleName.contains("CUSTOMER")) ? SenderType.CUSTOMER : SenderType.CAREGIVER;
             
             // Send message
             ChatMessageDTO message = chatService.sendMessage(request, senderId, senderType);

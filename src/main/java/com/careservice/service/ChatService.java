@@ -204,6 +204,8 @@ public class ChatService {
         ChatMessage lastMessage = chatMessageRepository.findLastMessageByChatRoomId(room.getId());
         long unreadCount = chatMessageRepository.countUnreadMessages(room.getId(), currentUserId);
         
+        Booking booking = room.getBooking();
+        
         return ChatRoomDTO.builder()
                 .id(room.getId())
                 .bookingId(room.getBooking().getId())
@@ -216,6 +218,11 @@ public class ChatService {
                 .lastMessageAt(room.getLastMessageAt())
                 .lastMessagePreview(lastMessage != null ? lastMessage.getContent() : null)
                 .unreadCount(unreadCount)
+                .serviceName(booking.getService().getName())
+                .scheduledStartTime(booking.getScheduledStartTime())
+                .scheduledEndTime(booking.getScheduledEndTime())
+                .location(booking.getLocation())
+                .bookingStatus(booking.getStatus().name())
                 .build();
     }
     
