@@ -72,7 +72,7 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
  '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O',
  'Trần Thị Cúc',
  'https://images.pexels.com/photos/532758/pexels-photo-532758.jpeg',
- '0904234567', '456 Lê Lợi, Q3, HCMC', 'ACTIVE', true, NOW(), NOW())
+ '0904234567', '456 Lê Lợi, Quận Hải Châu, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 
 INSERT INTO user_roles VALUES (4,4)
@@ -91,7 +91,7 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
  '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O',
  'Lê Văn Dũng',
  'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg',
- '0905234567', '789 Nguyễn Trãi, Q5, HCMC', 'ACTIVE', true, NOW(), NOW())
+ '0905234567', '789 Nguyễn Trãi, Quận Thanh Khê, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 
 INSERT INTO user_roles VALUES (5,4)
@@ -110,7 +110,7 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
  '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O',
  'Phạm Thị Hoài',
  'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg',
- '0906234567', '321 Võ Văn Tần, Q3, HCMC', 'ACTIVE', true, NOW(), NOW())
+ '0906234567', '321 Võ Văn Tần, Quận Sơn Trà, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 
 INSERT INTO user_roles VALUES (6,4)
@@ -129,7 +129,7 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
  '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O',
  'Hoàng Văn Phúc',
  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg',
- '0907234567', '654 Lý Tự Trọng, Q1, HCMC', 'ACTIVE', true, NOW(), NOW())
+ '0907234567', '654 Lý Tự Trọng, Quận Ngũ Hành Sơn, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 
 INSERT INTO user_roles VALUES (7,4)
@@ -148,7 +148,7 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
  '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O',
  'Trần Thị Gia Hân',
  'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg',
- '0908234567', '987 Pasteur, Q3, HCMC', 'ACTIVE', true, NOW(), NOW())
+ '0908234567', '987 Pasteur, Quận Liên Chiểu, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 
 INSERT INTO user_roles VALUES (8,4)
@@ -167,7 +167,7 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
  '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O',
  'Nguyễn Văn Hải',
  'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg',
- '0909234567', '147 Trần Hưng Đạo, Q1, HCMC', 'ACTIVE', true, NOW(), NOW())
+ '0909234567', '147 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 
 INSERT INTO user_roles VALUES (9,4)
@@ -235,7 +235,7 @@ ON DUPLICATE KEY UPDATE emergency_contact = VALUES(emergency_contact);
 
 -- Caregiver 7 (User 15)
 INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
-(15, 'caregiver7@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Đặng Thị Thu', 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg', '0916234567', '987 Phạm Văn Đồng, Thủ Đức, HCMC', 'ACTIVE', true, NOW(), NOW())
+(15, 'caregiver7@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Đặng Thị Thu', 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg', '0916234567', '987 Phạm Văn Đồng, Quận Thanh Khê, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (15,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
@@ -244,7 +244,7 @@ ON DUPLICATE KEY UPDATE bio = VALUES(bio);
 
 -- Caregiver 8 (User 16)
 INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
-(16, 'caregiver8@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Bùi Văn Long', 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg', '0917234567', '147 Hoàng Văn Thụ, Phú Nhuận, HCMC', 'ACTIVE', true, NOW(), NOW())
+(16, 'caregiver8@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Bùi Văn Long', 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg', '0917234567', '147 Hoàng Văn Thụ, Quận Sơn Trà, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (16,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
@@ -253,7 +253,7 @@ ON DUPLICATE KEY UPDATE bio = VALUES(bio);
 
 -- Caregiver 9 (User 17)
 INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
-(17, 'caregiver9@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Đỗ Thị Tuyết', 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg', '0918234567', '258 Phan Đăng Lưu, Phú Nhuận, HCMC', 'ACTIVE', true, NOW(), NOW())
+(17, 'caregiver9@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Đỗ Thị Tuyết', 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg', '0918234567', '258 Phan Đăng Lưu, Quận Liên Chiểu, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (17,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
