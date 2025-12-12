@@ -118,9 +118,11 @@ public class CaregiverService {
         dto.setFullName(caregiver.getUser().getFullName());
         dto.setPhoneNumber(caregiver.getUser().getPhoneNumber());
         dto.setAddress(caregiver.getUser().getAddress());
+        dto.setAvatarUrl(caregiver.getUser().getAvatarUrl());
         dto.setBio(caregiver.getBio());
         dto.setSkills(caregiver.getSkills());
         dto.setExperience(caregiver.getExperience());
+        dto.setExperienceYears(caregiver.getExperienceYears());
         dto.setIdCardNumber(caregiver.getIdCardNumber());
         dto.setIdCardUrl(caregiver.getIdCardUrl());
         dto.setCertificateUrls(caregiver.getCertificateUrls());
