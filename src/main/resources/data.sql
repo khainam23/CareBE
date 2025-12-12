@@ -179,3 +179,122 @@ INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, id
  '2 năm kinh nghiệm', '079678901234', NULL, NULL,
  'PENDING', NULL, false, NULL, 500000, 0, 0, 0, 0, NOW(), NOW(), NULL)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+
+---------------------------------------------------
+-- MORE DEMO DATA (CUSTOMERS)
+---------------------------------------------------
+
+-- Customer 2 (User 10)
+INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(10, 'customer2@example.com', '$2a$10$DKs.Pii4ggYjGZhkNg3HPu.YdOo3gPqFXQ8HpZ7.hFYhKJFAiQKh6', 'Trần Văn Bình', 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg', '0911234567', '123 Lê Duẩn, Q1, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+INSERT INTO user_roles VALUES (10,3) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+INSERT INTO customers (user_id, emergency_contact, emergency_phone, total_spent, booking_count, created_at, updated_at) 
+VALUES (10, 'Trần Thị Hoa', '0911234568', 0, 0, NOW(), NOW()) 
+ON DUPLICATE KEY UPDATE emergency_contact = VALUES(emergency_contact);
+
+-- Customer 3 (User 11)
+INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(11, 'customer3@example.com', '$2a$10$DKs.Pii4ggYjGZhkNg3HPu.YdOo3gPqFXQ8HpZ7.hFYhKJFAiQKh6', 'Lê Thị Lan', 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg', '0912234567', '456 Nguyễn Thị Minh Khai, Q3, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+INSERT INTO user_roles VALUES (11,3) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+INSERT INTO customers (user_id, emergency_contact, emergency_phone, total_spent, booking_count, created_at, updated_at) 
+VALUES (11, 'Lê Văn Hùng', '0912234568', 0, 0, NOW(), NOW()) 
+ON DUPLICATE KEY UPDATE emergency_contact = VALUES(emergency_contact);
+
+-- Customer 4 (User 12)
+INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(12, 'customer4@example.com', '$2a$10$DKs.Pii4ggYjGZhkNg3HPu.YdOo3gPqFXQ8HpZ7.hFYhKJFAiQKh6', 'Phạm Minh Tuấn', 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg', '0913234567', '789 Điện Biên Phủ, Q10, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+INSERT INTO user_roles VALUES (12,3) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+INSERT INTO customers (user_id, emergency_contact, emergency_phone, total_spent, booking_count, created_at, updated_at) 
+VALUES (12, 'Phạm Thị Mai', '0913234568', 0, 0, NOW(), NOW()) 
+ON DUPLICATE KEY UPDATE emergency_contact = VALUES(emergency_contact);
+
+-- Customer 5 (User 13)
+INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(13, 'customer5@example.com', '$2a$10$DKs.Pii4ggYjGZhkNg3HPu.YdOo3gPqFXQ8HpZ7.hFYhKJFAiQKh6', 'Hoàng Thị Mai', 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg', '0914234567', '321 Hai Bà Trưng, Q1, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+INSERT INTO user_roles VALUES (13,3) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+INSERT INTO customers (user_id, emergency_contact, emergency_phone, total_spent, booking_count, created_at, updated_at) 
+VALUES (13, 'Hoàng Văn Nam', '0914234568', 0, 0, NOW(), NOW()) 
+ON DUPLICATE KEY UPDATE emergency_contact = VALUES(emergency_contact);
+
+-- Customer 6 (User 14)
+INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(14, 'customer6@example.com', '$2a$10$DKs.Pii4ggYjGZhkNg3HPu.YdOo3gPqFXQ8HpZ7.hFYhKJFAiQKh6', 'Ngô Văn Hùng', 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg', '0915234567', '654 Cách Mạng Tháng 8, Q10, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+INSERT INTO user_roles VALUES (14,3) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+INSERT INTO customers (user_id, emergency_contact, emergency_phone, total_spent, booking_count, created_at, updated_at) 
+VALUES (14, 'Ngô Thị Lan', '0915234568', 0, 0, NOW(), NOW()) 
+ON DUPLICATE KEY UPDATE emergency_contact = VALUES(emergency_contact);
+
+---------------------------------------------------
+-- MORE DEMO DATA (CAREGIVERS)
+---------------------------------------------------
+
+-- Caregiver 7 (User 15)
+INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(15, 'caregiver7@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Đặng Thị Thu', 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg', '0916234567', '987 Phạm Văn Đồng, Thủ Đức, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+INSERT INTO user_roles VALUES (15,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
+VALUES (15, 'Chuyên gia vật lý trị liệu', 'Rehabilitation, Elderly care', '8 năm kinh nghiệm', 'APPROVED', true, 650000, 4.9, 45, 60, 39000000, NOW(), NOW(), NOW())
+ON DUPLICATE KEY UPDATE bio = VALUES(bio);
+
+-- Caregiver 8 (User 16)
+INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(16, 'caregiver8@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Bùi Văn Long', 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg', '0917234567', '147 Hoàng Văn Thụ, Phú Nhuận, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+INSERT INTO user_roles VALUES (16,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
+VALUES (16, 'Chăm sóc người bệnh tại nhà', 'Medical care, Nursing', '5 năm kinh nghiệm', 'APPROVED', true, 550000, 4.7, 28, 35, 19250000, NOW(), NOW(), NOW())
+ON DUPLICATE KEY UPDATE bio = VALUES(bio);
+
+-- Caregiver 9 (User 17)
+INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
+(17, 'caregiver9@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Đỗ Thị Tuyết', 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg', '0918234567', '258 Phan Đăng Lưu, Phú Nhuận, HCMC', 'ACTIVE', true, NOW(), NOW())
+ON DUPLICATE KEY UPDATE email = VALUES(email);
+INSERT INTO user_roles VALUES (17,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
+INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
+VALUES (17, 'Chăm sóc mẹ và bé', 'Child care, Postpartum care', '4 năm kinh nghiệm', 'APPROVED', true, 500000, 4.8, 30, 40, 20000000, NOW(), NOW(), NOW())
+ON DUPLICATE KEY UPDATE bio = VALUES(bio);
+
+---------------------------------------------------
+-- MORE DEMO DATA (BOOKINGS)
+---------------------------------------------------
+
+INSERT INTO bookings (booking_code, customer_id, caregiver_id, service_id, scheduled_start_time, scheduled_end_time, actual_start_time, actual_end_time, total_price, status, location, created_at, updated_at) VALUES
+('BK001', (SELECT id FROM customers WHERE user_id=3), (SELECT id FROM caregivers WHERE user_id=4), 1, DATE_SUB(NOW(), INTERVAL 5 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 5 DAY), INTERVAL 4 HOUR), DATE_SUB(NOW(), INTERVAL 5 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 5 DAY), INTERVAL 4 HOUR), 600000, 'COMPLETED', '123 Nguyễn Huệ, Q1, HCMC', DATE_SUB(NOW(), INTERVAL 6 DAY), DATE_SUB(NOW(), INTERVAL 5 DAY)),
+('BK002', (SELECT id FROM customers WHERE user_id=10), (SELECT id FROM caregivers WHERE user_id=5), 2, DATE_SUB(NOW(), INTERVAL 3 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 3 DAY), INTERVAL 4 HOUR), DATE_SUB(NOW(), INTERVAL 3 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 3 DAY), INTERVAL 4 HOUR), 480000, 'COMPLETED', '123 Lê Duẩn, Q1, HCMC', DATE_SUB(NOW(), INTERVAL 4 DAY), DATE_SUB(NOW(), INTERVAL 3 DAY)),
+('BK003', (SELECT id FROM customers WHERE user_id=11), (SELECT id FROM caregivers WHERE user_id=6), 3, DATE_SUB(NOW(), INTERVAL 1 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 3 HOUR), DATE_SUB(NOW(), INTERVAL 1 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 3 HOUR), 600000, 'COMPLETED', '456 Nguyễn Thị Minh Khai, Q3, HCMC', DATE_SUB(NOW(), INTERVAL 2 DAY), DATE_SUB(NOW(), INTERVAL 1 DAY)),
+('BK004', (SELECT id FROM customers WHERE user_id=12), (SELECT id FROM caregivers WHERE user_id=15), 4, NOW() + INTERVAL 1 DAY, NOW() + INTERVAL 1 DAY + INTERVAL 4 HOUR, NULL, NULL, 720000, 'CONFIRMED', '789 Điện Biên Phủ, Q10, HCMC', NOW(), NOW()),
+('BK005', (SELECT id FROM customers WHERE user_id=13), (SELECT id FROM caregivers WHERE user_id=16), 5, NOW() + INTERVAL 2 DAY, NOW() + INTERVAL 2 DAY + INTERVAL 3 HOUR, NULL, NULL, 300000, 'PENDING', '321 Hai Bà Trưng, Q1, HCMC', NOW(), NOW()),
+('BK006', (SELECT id FROM customers WHERE user_id=3), (SELECT id FROM caregivers WHERE user_id=5), 6, NOW() + INTERVAL 3 DAY, NOW() + INTERVAL 3 DAY + INTERVAL 3 HOUR, NULL, NULL, 240000, 'PENDING', '123 Nguyễn Huệ, Q1, HCMC', NOW(), NOW()),
+('BK007', (SELECT id FROM customers WHERE user_id=10), (SELECT id FROM caregivers WHERE user_id=6), 7, DATE_SUB(NOW(), INTERVAL 10 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 10 DAY), INTERVAL 4 HOUR), DATE_SUB(NOW(), INTERVAL 10 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 10 DAY), INTERVAL 4 HOUR), 1000000, 'COMPLETED', '123 Lê Duẩn, Q1, HCMC', DATE_SUB(NOW(), INTERVAL 11 DAY), DATE_SUB(NOW(), INTERVAL 10 DAY)),
+('BK008', (SELECT id FROM customers WHERE user_id=11), (SELECT id FROM caregivers WHERE user_id=17), 8, DATE_SUB(NOW(), INTERVAL 2 DAY), DATE_ADD(DATE_SUB(NOW(), INTERVAL 2 DAY), INTERVAL 3 HOUR), NULL, NULL, 540000, 'CANCELLED', '456 Nguyễn Thị Minh Khai, Q3, HCMC', DATE_SUB(NOW(), INTERVAL 3 DAY), DATE_SUB(NOW(), INTERVAL 2 DAY)),
+('BK009', (SELECT id FROM customers WHERE user_id=12), (SELECT id FROM caregivers WHERE user_id=4), 1, NOW() + INTERVAL 5 DAY, NOW() + INTERVAL 5 DAY + INTERVAL 4 HOUR, NULL, NULL, 600000, 'CONFIRMED', '789 Điện Biên Phủ, Q10, HCMC', NOW(), NOW()),
+('BK010', (SELECT id FROM customers WHERE user_id=13), (SELECT id FROM caregivers WHERE user_id=5), 2, NOW() + INTERVAL 6 DAY, NOW() + INTERVAL 6 DAY + INTERVAL 4 HOUR, NULL, NULL, 480000, 'PENDING', '321 Hai Bà Trưng, Q1, HCMC', NOW(), NOW())
+ON DUPLICATE KEY UPDATE status = VALUES(status);
+
+---------------------------------------------------
+-- MORE DEMO DATA (PAYMENTS)
+---------------------------------------------------
+
+INSERT INTO payments (transaction_id, booking_id, amount, payment_method, status, paid_at, created_at, updated_at) VALUES
+('TXN001', (SELECT id FROM bookings WHERE booking_code='BK001'), 600000, 'CREDIT_CARD', 'COMPLETED', DATE_SUB(NOW(), INTERVAL 5 DAY), DATE_SUB(NOW(), INTERVAL 5 DAY), DATE_SUB(NOW(), INTERVAL 5 DAY)),
+('TXN002', (SELECT id FROM bookings WHERE booking_code='BK002'), 480000, 'E_WALLET', 'COMPLETED', DATE_SUB(NOW(), INTERVAL 3 DAY), DATE_SUB(NOW(), INTERVAL 3 DAY), DATE_SUB(NOW(), INTERVAL 3 DAY)),
+('TXN003', (SELECT id FROM bookings WHERE booking_code='BK003'), 600000, 'CASH', 'COMPLETED', DATE_SUB(NOW(), INTERVAL 1 DAY), DATE_SUB(NOW(), INTERVAL 1 DAY), DATE_SUB(NOW(), INTERVAL 1 DAY)),
+('TXN004', (SELECT id FROM bookings WHERE booking_code='BK007'), 1000000, 'BANK_TRANSFER', 'COMPLETED', DATE_SUB(NOW(), INTERVAL 10 DAY), DATE_SUB(NOW(), INTERVAL 10 DAY), DATE_SUB(NOW(), INTERVAL 10 DAY))
+ON DUPLICATE KEY UPDATE status = VALUES(status);
+
+---------------------------------------------------
+-- MORE DEMO DATA (REVIEWS)
+---------------------------------------------------
+
+INSERT INTO reviews (booking_id, customer_id, caregiver_id, rating, comment, created_at) VALUES
+((SELECT id FROM bookings WHERE booking_code='BK001'), (SELECT id FROM customers WHERE user_id=3), (SELECT id FROM caregivers WHERE user_id=4), 5, 'Dịch vụ rất tốt, cô Cúc rất tận tâm.', DATE_SUB(NOW(), INTERVAL 4 DAY)),
+((SELECT id FROM bookings WHERE booking_code='BK002'), (SELECT id FROM customers WHERE user_id=10), (SELECT id FROM caregivers WHERE user_id=5), 4, 'Chăm sóc trẻ tốt, nhưng đến hơi muộn một chút.', DATE_SUB(NOW(), INTERVAL 2 DAY)),
+((SELECT id FROM bookings WHERE booking_code='BK003'), (SELECT id FROM customers WHERE user_id=11), (SELECT id FROM caregivers WHERE user_id=6), 5, 'Y tá Hoài rất chuyên nghiệp, tôi rất hài lòng.', NOW()),
+((SELECT id FROM bookings WHERE booking_code='BK007'), (SELECT id FROM customers WHERE user_id=10), (SELECT id FROM caregivers WHERE user_id=6), 5, 'Tuyệt vời, sẽ đặt lại.', DATE_SUB(NOW(), INTERVAL 9 DAY))
+ON DUPLICATE KEY UPDATE rating = VALUES(rating);
