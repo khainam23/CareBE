@@ -21,9 +21,7 @@ public class ChatController {
     
     private final ChatService chatService;
     private final SimpMessagingTemplate messagingTemplate;
-    private final org.springframework.data.redis.core.RedisTemplate<String, String> redisTemplate;
-    
-    private static final String TYPING_KEY_PREFIX = "typing:room:";
+
     
     @MessageMapping("/chat/send")
     public void sendMessage(@Payload SendMessageRequest request, 
@@ -59,10 +57,6 @@ public class ChatController {
         try {
             message.setUserId(userPrincipal.getId());
             message.setUserName(userPrincipal.getFullName());
-            
-            // Store typing state in Redis
-            String key = TYPING_KEY_PREFIX + message.getChatRoomId() + ":user:" + userPrincipal.getId();
-            redisTemplate.opsForValue().set(key, "true", 5, java.util.concurrent.TimeUnit.SECONDS);
             
             // Broadcast typing indicator to chat room
             messagingTemplate.convertAndSend("/topic/chat/" + message.getChatRoomId() + "/typing", message);

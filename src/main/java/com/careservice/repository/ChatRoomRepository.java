@@ -21,4 +21,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     List<ChatRoom> findActiveByUserId(@Param("userId") Long userId);
     
     boolean existsByBookingId(Long bookingId);
+    
+    Optional<ChatRoom> findByCustomerIdAndCaregiverId(Long customerId, Long caregiverId);
 }

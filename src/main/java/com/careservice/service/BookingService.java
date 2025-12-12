@@ -82,6 +82,20 @@ public class BookingService {
         
         Booking savedBooking = bookingRepository.save(booking);
         
+        // Create chat room if caregiver is assigned
+        if (savedBooking.getCaregiver() != null) {
+            try {
+                System.out.println("Creating chat room for booking: " + savedBooking.getId() + ", caregiver: " + savedBooking.getCaregiver().getId());
+                chatService.createChatRoom(savedBooking.getId());
+                System.out.println("Chat room created successfully for booking: " + savedBooking.getId());
+            } catch (Exception e) {
+                System.err.println("Failed to create chat room for booking " + savedBooking.getId() + ": " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Skipping chat room creation for booking " + savedBooking.getId() + " - no caregiver assigned");
+        }
+        
         notificationService.createNotification(
                 user,
                 Notification.NotificationType.BOOKING_CONFIRMATION,

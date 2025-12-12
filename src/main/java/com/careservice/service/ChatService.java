@@ -32,30 +32,60 @@ public class ChatService {
     private final ChatMessageRepository chatMessageRepository;
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
-    private final org.springframework.data.redis.core.RedisTemplate<String, String> redisTemplate;
-    
-    private static final int MAX_MESSAGES_PER_MINUTE = 10;
-    private static final String RATE_LIMIT_KEY_PREFIX = "rate_limit:chat:";
     
     @Transactional
     public ChatRoom createChatRoom(Long bookingId) {
-        if (chatRoomRepository.existsByBookingId(bookingId)) {
-            return chatRoomRepository.findByBookingId(bookingId)
-                    .orElseThrow(() -> new RuntimeException("Chat room exists but cannot be found"));
-        }
-        
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
         
+        Long customerId = booking.getCustomer().getUser().getId();
+        Long caregiverId = booking.getCaregiver() != null ? booking.getCaregiver().getUser().getId() : null;
+        
+        ChatRoom existingBookingRoom = chatRoomRepository.findByBookingId(bookingId).orElse(null);
+
+        if (caregiverId != null) {
+            // Check for existing conversation with this caregiver
+            java.util.Optional<ChatRoom> historicalRoomOpt = chatRoomRepository.findByCustomerIdAndCaregiverId(customerId, caregiverId);
+            
+            if (historicalRoomOpt.isPresent()) {
+                ChatRoom historicalRoom = historicalRoomOpt.get();
+                
+                // If the historical room is ALREADY the booking room, just return it
+                if (existingBookingRoom != null && existingBookingRoom.getId().equals(historicalRoom.getId())) {
+                     return historicalRoom;
+                }
+
+                // If we have a pending room for this booking that is different from historical room
+                if (existingBookingRoom != null) {
+                    // Delete the temporary pending room to free up the booking_id unique constraint
+                    chatRoomRepository.delete(existingBookingRoom);
+                    chatRoomRepository.flush();
+                }
+                
+                // Link historical room to this new booking
+                historicalRoom.setBooking(booking);
+                log.info("Reusing existing chat room {} for booking {}", historicalRoom.getId(), bookingId);
+                return chatRoomRepository.save(historicalRoom);
+            }
+        }
+
+        // No historical room with this caregiver.
+        if (existingBookingRoom != null) {
+            // Just update existing room (e.g. assigning caregiver for first time)
+            existingBookingRoom.setCaregiverId(caregiverId);
+            return chatRoomRepository.save(existingBookingRoom);
+        }
+        
         ChatRoom chatRoom = ChatRoom.builder()
                 .booking(booking)
-                .customerId(booking.getCustomer().getId())
-                .caregiverId(booking.getCaregiver().getId())
+                .customerId(customerId)
+                .caregiverId(caregiverId)
                 .status(ChatRoom.ChatRoomStatus.ACTIVE)
                 .build();
         
         chatRoom = chatRoomRepository.save(chatRoom);
-        log.info("Created chat room {} for booking {}", chatRoom.getId(), bookingId);
+        log.info("Created chat room {} for booking {} (customer user: {}, caregiver user: {})", 
+                chatRoom.getId(), bookingId, customerId, caregiverId);
         
         return chatRoom;
     }
@@ -65,19 +95,24 @@ public class ChatService {
         ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId())
                 .orElseThrow(() -> new RuntimeException("Chat room not found"));
         
-        // Check rate limit
-        checkRateLimit(senderId);
-        
         // Validate sender is participant
         if (!isParticipant(chatRoom, senderId, senderType)) {
             throw new RuntimeException("User is not a participant of this chat room");
         }
         
-        // Validate booking status
+        // Validate booking status - allow PENDING for customers only
         Booking booking = chatRoom.getBooking();
-        if (booking.getStatus() != Booking.BookingStatus.CONFIRMED && 
-            booking.getStatus() != Booking.BookingStatus.IN_PROGRESS) {
-            throw new RuntimeException("Cannot send messages for bookings that are not confirmed or in progress");
+        if (senderType == SenderType.CAREGIVER) {
+            if (booking.getStatus() != Booking.BookingStatus.CONFIRMED && 
+                booking.getStatus() != Booking.BookingStatus.IN_PROGRESS &&
+                booking.getStatus() != Booking.BookingStatus.ASSIGNED) {
+                throw new RuntimeException("Cannot send messages for bookings that are not assigned, confirmed or in progress");
+            }
+        } else {
+            if (booking.getStatus() == Booking.BookingStatus.CANCELLED || 
+                booking.getStatus() == Booking.BookingStatus.REJECTED) {
+                throw new RuntimeException("Cannot send messages for cancelled or rejected bookings");
+            }
         }
         
         ChatMessage message = ChatMessage.builder()
@@ -151,11 +186,30 @@ public class ChatService {
     
     @Transactional(readOnly = true)
     public ChatRoomDTO getChatRoomByBooking(Long bookingId, Long userId) {
-        ChatRoom chatRoom = chatRoomRepository.findByBookingId(bookingId)
-                .orElseThrow(() -> new RuntimeException("Chat room not found for this booking"));
+        // First try to find by booking ID
+        ChatRoom chatRoom = chatRoomRepository.findByBookingId(bookingId).orElse(null);
         
-        // Validate user is participant
-        if (!chatRoom.getCustomerId().equals(userId) && !chatRoom.getCaregiverId().equals(userId)) {
+        // If not found by booking ID (might be linked to another booking now), try by participants
+        if (chatRoom == null) {
+            Booking booking = bookingRepository.findById(bookingId)
+                    .orElseThrow(() -> new RuntimeException("Booking not found"));
+            
+            Long customerId = booking.getCustomer().getUser().getId();
+            Long caregiverId = booking.getCaregiver() != null ? booking.getCaregiver().getUser().getId() : null;
+            
+            if (caregiverId != null) {
+                chatRoom = chatRoomRepository.findByCustomerIdAndCaregiverId(customerId, caregiverId)
+                        .orElseThrow(() -> new RuntimeException("Chat room not found for this booking context"));
+            } else {
+                throw new RuntimeException("Chat room not found");
+            }
+        }
+        
+        // Validate user is participant (customer or caregiver if assigned)
+        boolean isCustomer = chatRoom.getCustomerId().equals(userId);
+        boolean isCaregiver = chatRoom.getCaregiverId() != null && chatRoom.getCaregiverId().equals(userId);
+        
+        if (!isCustomer && !isCaregiver) {
             throw new RuntimeException("User is not a participant of this chat room");
         }
         
@@ -175,7 +229,7 @@ public class ChatService {
         if (senderType == SenderType.CUSTOMER) {
             return chatRoom.getCustomerId().equals(userId);
         } else {
-            return chatRoom.getCaregiverId().equals(userId);
+            return chatRoom.getCaregiverId() != null && chatRoom.getCaregiverId().equals(userId);
         }
     }
     
@@ -199,7 +253,7 @@ public class ChatService {
     
     private ChatRoomDTO convertToRoomDTO(ChatRoom room, Long currentUserId) {
         User customer = userRepository.findById(room.getCustomerId()).orElse(null);
-        User caregiver = userRepository.findById(room.getCaregiverId()).orElse(null);
+        User caregiver = room.getCaregiverId() != null ? userRepository.findById(room.getCaregiverId()).orElse(null) : null;
         
         ChatMessage lastMessage = chatMessageRepository.findLastMessageByChatRoomId(room.getId());
         long unreadCount = chatMessageRepository.countUnreadMessages(room.getId(), currentUserId);
@@ -212,7 +266,7 @@ public class ChatService {
                 .customerId(room.getCustomerId())
                 .customerName(customer != null ? customer.getFullName() : "Unknown")
                 .caregiverId(room.getCaregiverId())
-                .caregiverName(caregiver != null ? caregiver.getFullName() : "Unknown")
+                .caregiverName(caregiver != null ? caregiver.getFullName() : "Awaiting caregiver assignment")
                 .status(room.getStatus())
                 .createdAt(room.getCreatedAt())
                 .lastMessageAt(room.getLastMessageAt())
@@ -226,18 +280,4 @@ public class ChatService {
                 .build();
     }
     
-    private void checkRateLimit(Long userId) {
-        String key = RATE_LIMIT_KEY_PREFIX + userId;
-        String countStr = redisTemplate.opsForValue().get(key);
-        int count = countStr != null ? Integer.parseInt(countStr) : 0;
-        
-        if (count >= MAX_MESSAGES_PER_MINUTE) {
-            throw new RuntimeException("Rate limit exceeded. Please wait a moment before sending more messages.");
-        }
-        
-        redisTemplate.opsForValue().increment(key);
-        if (count == 0) {
-            redisTemplate.expire(key, 1, java.util.concurrent.TimeUnit.MINUTES);
-        }
-    }
 }

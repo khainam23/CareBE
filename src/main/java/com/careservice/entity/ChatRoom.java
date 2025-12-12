@@ -35,7 +35,7 @@ public class ChatRoom {
     @Column(nullable = false)
     private Long customerId;
     
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long caregiverId;
     
     @Enumerated(EnumType.STRING)
