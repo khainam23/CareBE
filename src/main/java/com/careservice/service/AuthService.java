@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -116,6 +117,7 @@ public class AuthService {
         caregiver.setExperience(request.getYearsOfExperience() != null ? 
             request.getYearsOfExperience() + " năm kinh nghiệm" : null);
         caregiver.setIdCardNumber(request.getIdCardNumber());
+        caregiver.setHourlyRate(BigDecimal.valueOf(120000));
         caregiver.setCertificateUrls(request.getCertifications());
         caregiver.setVerificationStatus(Caregiver.VerificationStatus.PENDING);
         caregiver.setIsAvailable(false); // Chưa khả dụng cho đến khi được phê duyệt
