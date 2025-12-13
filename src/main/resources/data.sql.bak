@@ -78,11 +78,11 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (4,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
 (1, 4, 'Chuyên viên chăm sóc người già 5 năm kinh nghiệm',
  'Elderly care, Medical care, Companion services',
- '5 năm kinh nghiệm', 5, '079123456789', NULL, NULL,
- 'APPROVED', NULL, true, NULL, 180000, 4.8, 25, 30, 15000000, NOW(), NOW(), NOW())
+ '5 năm kinh nghiệm', '079123456789', NULL, NULL,
+ 'APPROVED', NULL, true, NULL, 505000, 4.8, 25, 30, 15000000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- Caregiver 2
@@ -97,11 +97,11 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (5,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
 (2, 5, 'Chuyên chăm sóc trẻ em 3 năm kinh nghiệm',
  'Child care, Housekeeping, Companion services',
- '3 năm kinh nghiệm', 3, '079234567890', NULL, NULL,
- 'APPROVED', NULL, true, NULL, 160000, 4.6, 18, 22, 9800000, NOW(), NOW(), NOW())
+ '3 năm kinh nghiệm', '079234567890', NULL, NULL,
+ 'APPROVED', NULL, true, NULL, 450000, 4.6, 18, 22, 9800000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- Caregiver 3
@@ -116,11 +116,11 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (6,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
 (3, 6, 'Y tá 7 năm kinh nghiệm chăm sóc y tế tại nhà',
  'Medical care, Nursing care, Rehabilitation support',
- '7 năm điều dưỡng', 7, '079345678901', NULL, NULL,
- 'APPROVED', NULL, true, NULL, 200000, 4.9, 42, 55, 38500000, NOW(), NOW(), NOW())
+ '7 năm điều dưỡng', '079345678901', NULL, NULL,
+ 'APPROVED', NULL, true, NULL, 700000, 4.9, 42, 55, 38500000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- Caregiver 4
@@ -135,11 +135,11 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (7,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
 (4, 7, 'Chuyên chăm sóc người cao tuổi và phục hồi chức năng',
  'Elderly care, Rehabilitation support, Companion services',
- '4 năm kinh nghiệm', 4, '079456789012', NULL, NULL,
- 'APPROVED', NULL, true, NULL, 170000, 4.7, 32, 40, 22000000, NOW(), NOW(), NOW())
+ '4 năm kinh nghiệm', '079456789012', NULL, NULL,
+ 'APPROVED', NULL, true, NULL, 550000, 4.7, 32, 40, 22000000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- Caregiver 5
@@ -154,11 +154,11 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (8,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
 (5, 8, 'Chuyên viên chăm sóc đa năng 6 năm kinh nghiệm',
  'Elderly care, Child care, Housekeeping, Companion services',
- '6 năm kinh nghiệm', 6, '079567890123', NULL, NULL,
- 'APPROVED', NULL, true, NULL, 190000, 4.8, 38, 48, 28800000, NOW(), NOW(), NOW())
+ '6 năm kinh nghiệm', '079567890123', NULL, NULL,
+ 'APPROVED', NULL, true, NULL, 600000, 4.8, 38, 48, 28800000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- Caregiver 6 (Pending)
@@ -173,11 +173,11 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (9,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+INSERT INTO caregivers (id, user_id, bio, skills, experience, id_card_number, id_card_url, certificate_urls, verification_status, rejection_reason, is_available, available_schedule, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
 (6, 9, 'Nhân viên mới, đang chờ xác minh hồ sơ',
  'Elderly care, Companion services',
- '2 năm kinh nghiệm', 2, '079678901234', NULL, NULL,
- 'PENDING', NULL, false, NULL, 150000, 0, 0, 0, 0, NOW(), NOW(), NULL)
+ '2 năm kinh nghiệm', '079678901234', NULL, NULL,
+ 'PENDING', NULL, false, NULL, 500000, 0, 0, 0, 0, NOW(), NOW(), NULL)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 ---------------------------------------------------
@@ -238,8 +238,8 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
 (15, 'caregiver7@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Đặng Thị Thu', 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg', '0916234567', '987 Phạm Văn Đồng, Quận Thanh Khê, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (15,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
-INSERT INTO caregivers (user_id, bio, skills, experience, experience_years, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
-VALUES (15, 'Chuyên gia vật lý trị liệu', 'Rehabilitation, Elderly care', '8 năm kinh nghiệm', 8, 'APPROVED', true, 200000, 4.9, 45, 60, 39000000, NOW(), NOW(), NOW())
+INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
+VALUES (15, 'Chuyên gia vật lý trị liệu', 'Rehabilitation, Elderly care', '8 năm kinh nghiệm', 'APPROVED', true, 650000, 4.9, 45, 60, 39000000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE bio = VALUES(bio);
 
 -- Caregiver 8 (User 16)
@@ -247,8 +247,8 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
 (16, 'caregiver8@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Bùi Văn Long', 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg', '0917234567', '147 Hoàng Văn Thụ, Quận Sơn Trà, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (16,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
-INSERT INTO caregivers (user_id, bio, skills, experience, experience_years, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
-VALUES (16, 'Chăm sóc người bệnh tại nhà', 'Medical care, Nursing', '5 năm kinh nghiệm', 5, 'APPROVED', true, 170000, 4.7, 28, 35, 19250000, NOW(), NOW(), NOW())
+INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
+VALUES (16, 'Chăm sóc người bệnh tại nhà', 'Medical care, Nursing', '5 năm kinh nghiệm', 'APPROVED', true, 550000, 4.7, 28, 35, 19250000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE bio = VALUES(bio);
 
 -- Caregiver 9 (User 17)
@@ -256,8 +256,8 @@ INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, add
 (17, 'caregiver9@example.com', '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O', 'Đỗ Thị Tuyết', 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg', '0918234567', '258 Phan Đăng Lưu, Quận Liên Chiểu, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
 ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (17,4) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
-INSERT INTO caregivers (user_id, bio, skills, experience, experience_years, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
-VALUES (17, 'Chăm sóc mẹ và bé', 'Child care, Postpartum care', '4 năm kinh nghiệm', 4, 'APPROVED', true, 165000, 4.8, 30, 40, 20000000, NOW(), NOW(), NOW())
+INSERT INTO caregivers (user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) 
+VALUES (17, 'Chăm sóc mẹ và bé', 'Child care, Postpartum care', '4 năm kinh nghiệm', 'APPROVED', true, 500000, 4.8, 30, 40, 20000000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE bio = VALUES(bio);
 
 ---------------------------------------------------
@@ -320,17 +320,17 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (18,4), (19,4), (20,4), (21,4), (22,4), (23,4), (24,4), (25,4), (26,4), (27,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
-(7, 18, 'Chuyên chăm sóc người già', 'Elderly care, Companion services', '3 năm kinh nghiệm', 3, 'APPROVED', true, 160000, 4.5, 12, 15, 7200000, NOW(), NOW(), NOW()),
-(8, 19, 'Chăm sóc trẻ em và giúp việc nhà', 'Child care, Housekeeping', '4 năm kinh nghiệm', 4, 'APPROVED', true, 170000, 4.6, 16, 20, 10400000, NOW(), NOW(), NOW()),
-(9, 20, 'Y tá chuyên nghiệp', 'Medical care, Nursing', '6 năm kinh nghiệm', 6, 'APPROVED', true, 190000, 4.8, 28, 35, 22750000, NOW(), NOW(), NOW()),
-(10, 21, 'Chăm sóc đa năng', 'Elderly care, Child care, Companion', '2 năm kinh nghiệm', 2, 'APPROVED', true, 150000, 4.4, 10, 12, 5400000, NOW(), NOW(), NOW()),
-(11, 22, 'Hỗ trợ phục hồi chức năng', 'Rehabilitation, Medical care', '5 năm kinh nghiệm', 5, 'APPROVED', true, 180000, 4.7, 22, 28, 16800000, NOW(), NOW(), NOW()),
-(12, 23, 'Chuyên giáo dục trẻ', 'Child care, Education support', '3 năm kinh nghiệm', 3, 'APPROVED', true, 160000, 4.5, 14, 18, 9000000, NOW(), NOW(), NOW()),
-(13, 24, 'Điều dưỡng tại nhà', 'Nursing, Medical care', '7 năm kinh nghiệm', 7, 'APPROVED', true, 200000, 4.9, 35, 45, 31500000, NOW(), NOW(), NOW()),
-(14, 25, 'Giúp việc nhà', 'Housekeeping, Companion', '2 năm kinh nghiệm', 2, 'APPROVED', true, 130000, 4.3, 8, 10, 4000000, NOW(), NOW(), NOW()),
-(15, 26, 'Chăm sóc mẹ và bé', 'Child care, Postpartum care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 175000, 4.6, 18, 22, 12100000, NOW(), NOW(), NOW()),
-(16, 27, 'Hỗ trợ người cao tuổi', 'Elderly care, Companion services', '4 năm kinh nghiệm', 4, 'APPROVED', true, 170000, 4.5, 15, 19, 10070000, NOW(), NOW(), NOW())
+INSERT INTO caregivers (id, user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(7, 18, 'Chuyên chăm sóc người già', 'Elderly care, Companion services', '3 năm kinh nghiệm', 'APPROVED', true, 480000, 4.5, 12, 15, 7200000, NOW(), NOW(), NOW()),
+(8, 19, 'Chăm sóc trẻ em và giúp việc nhà', 'Child care, Housekeeping', '4 năm kinh nghiệm', 'APPROVED', true, 520000, 4.6, 16, 20, 10400000, NOW(), NOW(), NOW()),
+(9, 20, 'Y tá chuyên nghiệp', 'Medical care, Nursing', '6 năm kinh nghiệm', 'APPROVED', true, 650000, 4.8, 28, 35, 22750000, NOW(), NOW(), NOW()),
+(10, 21, 'Chăm sóc đa năng', 'Elderly care, Child care, Companion', '2 năm kinh nghiệm', 'APPROVED', true, 450000, 4.4, 10, 12, 5400000, NOW(), NOW(), NOW()),
+(11, 22, 'Hỗ trợ phục hồi chức năng', 'Rehabilitation, Medical care', '5 năm kinh nghiệm', 'APPROVED', true, 600000, 4.7, 22, 28, 16800000, NOW(), NOW(), NOW()),
+(12, 23, 'Chuyên giáo dục trẻ', 'Child care, Education support', '3 năm kinh nghiệm', 'APPROVED', true, 500000, 4.5, 14, 18, 9000000, NOW(), NOW(), NOW()),
+(13, 24, 'Điều dưỡng tại nhà', 'Nursing, Medical care', '7 năm kinh nghiệm', 'APPROVED', true, 700000, 4.9, 35, 45, 31500000, NOW(), NOW(), NOW()),
+(14, 25, 'Giúp việc nhà', 'Housekeeping, Companion', '2 năm kinh nghiệm', 'APPROVED', true, 400000, 4.3, 8, 10, 4000000, NOW(), NOW(), NOW()),
+(15, 26, 'Chăm sóc mẹ và bé', 'Child care, Postpartum care', '3 năm kinh nghiệm', 'APPROVED', true, 550000, 4.6, 18, 22, 12100000, NOW(), NOW(), NOW()),
+(16, 27, 'Hỗ trợ người cao tuổi', 'Elderly care, Companion services', '4 năm kinh nghiệm', 'APPROVED', true, 530000, 4.5, 15, 19, 10070000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- QUẬN THANH KHÊ (10 caregivers)
@@ -350,17 +350,17 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (28,4), (29,4), (30,4), (31,4), (32,4), (33,4), (34,4), (35,4), (36,4), (37,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
-(17, 28, 'Chuyên chăm sóc người bệnh', 'Medical care, Nursing', '5 năm kinh nghiệm', 5, 'APPROVED', true, 185000, 4.7, 20, 26, 16120000, NOW(), NOW(), NOW()),
-(18, 29, 'Chăm sóc trẻ sơ sinh', 'Child care, Postpartum care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 170000, 4.6, 17, 21, 11760000, NOW(), NOW(), NOW()),
-(19, 30, 'Hỗ trợ người khuyết tật', 'Medical care, Rehabilitation', '4 năm kinh nghiệm', 4, 'APPROVED', true, 175000, 4.5, 15, 19, 11020000, NOW(), NOW(), NOW()),
-(20, 31, 'Giáo dục và chăm sóc trẻ', 'Child care, Education', '2 năm kinh nghiệm', 2, 'APPROVED', true, 155000, 4.4, 12, 15, 7350000, NOW(), NOW(), NOW()),
-(21, 32, 'Điều dưỡng chuyên nghiệp', 'Nursing, Medical care', '6 năm kinh nghiệm', 6, 'APPROVED', true, 195000, 4.8, 25, 32, 21760000, NOW(), NOW(), NOW()),
-(22, 33, 'Hỗ trợ sinh hoạt', 'Elderly care, Companion', '3 năm kinh nghiệm', 3, 'APPROVED', true, 160000, 4.4, 13, 16, 7520000, NOW(), NOW(), NOW()),
-(23, 34, 'Chăm sóc toàn diện', 'Elderly care, Child care, Housekeeping', '5 năm kinh nghiệm', 5, 'APPROVED', true, 180000, 4.6, 19, 24, 14160000, NOW(), NOW(), NOW()),
-(24, 35, 'Phục hồi chức năng', 'Rehabilitation, Physical therapy', '4 năm kinh nghiệm', 4, 'APPROVED', true, 185000, 4.7, 21, 27, 16497000, NOW(), NOW(), NOW()),
-(25, 36, 'Chăm sóc và giáo dục', 'Child care, Education support', '3 năm kinh nghiệm', 3, 'APPROVED', true, 165000, 4.5, 14, 18, 9360000, NOW(), NOW(), NOW()),
-(26, 37, 'Hỗ trợ y tế tại nhà', 'Medical care, Nursing care', '5 năm kinh nghiệm', 5, 'APPROVED', true, 190000, 4.7, 23, 30, 19200000, NOW(), NOW(), NOW())
+INSERT INTO caregivers (id, user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(17, 28, 'Chuyên chăm sóc người bệnh', 'Medical care, Nursing', '5 năm kinh nghiệm', 'APPROVED', true, 620000, 4.7, 20, 26, 16120000, NOW(), NOW(), NOW()),
+(18, 29, 'Chăm sóc trẻ sơ sinh', 'Child care, Postpartum care', '3 năm kinh nghiệm', 'APPROVED', true, 560000, 4.6, 17, 21, 11760000, NOW(), NOW(), NOW()),
+(19, 30, 'Hỗ trợ người khuyết tật', 'Medical care, Rehabilitation', '4 năm kinh nghiệm', 'APPROVED', true, 580000, 4.5, 15, 19, 11020000, NOW(), NOW(), NOW()),
+(20, 31, 'Giáo dục và chăm sóc trẻ', 'Child care, Education', '2 năm kinh nghiệm', 'APPROVED', true, 490000, 4.4, 12, 15, 7350000, NOW(), NOW(), NOW()),
+(21, 32, 'Điều dưỡng chuyên nghiệp', 'Nursing, Medical care', '6 năm kinh nghiệm', 'APPROVED', true, 680000, 4.8, 25, 32, 21760000, NOW(), NOW(), NOW()),
+(22, 33, 'Hỗ trợ sinh hoạt', 'Elderly care, Companion', '3 năm kinh nghiệm', 'APPROVED', true, 470000, 4.4, 13, 16, 7520000, NOW(), NOW(), NOW()),
+(23, 34, 'Chăm sóc toàn diện', 'Elderly care, Child care, Housekeeping', '5 năm kinh nghiệm', 'APPROVED', true, 590000, 4.6, 19, 24, 14160000, NOW(), NOW(), NOW()),
+(24, 35, 'Phục hồi chức năng', 'Rehabilitation, Physical therapy', '4 năm kinh nghiệm', 'APPROVED', true, 610000, 4.7, 21, 27, 16497000, NOW(), NOW(), NOW()),
+(25, 36, 'Chăm sóc và giáo dục', 'Child care, Education support', '3 năm kinh nghiệm', 'APPROVED', true, 520000, 4.5, 14, 18, 9360000, NOW(), NOW(), NOW()),
+(26, 37, 'Hỗ trợ y tế tại nhà', 'Medical care, Nursing care', '5 năm kinh nghiệm', 'APPROVED', true, 640000, 4.7, 23, 30, 19200000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- QUẬN SƠN TRÀ (10 caregivers)
@@ -380,17 +380,17 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (38,4), (39,4), (40,4), (41,4), (42,4), (43,4), (44,4), (45,4), (46,4), (47,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
-(27, 38, 'Chăm sóc người lớn tuổi', 'Elderly care, Companion services', '4 năm kinh nghiệm', 4, 'APPROVED', true, 170000, 4.6, 16, 20, 10800000, NOW(), NOW(), NOW()),
-(28, 39, 'Y tá bệnh viện', 'Nursing, Medical care', '6 năm kinh nghiệm', 6, 'APPROVED', true, 195000, 4.8, 26, 33, 22110000, NOW(), NOW(), NOW()),
-(29, 40, 'Chăm sóc trẻ mầm non', 'Child care, Education', '3 năm kinh nghiệm', 3, 'APPROVED', true, 165000, 4.5, 14, 17, 8670000, NOW(), NOW(), NOW()),
-(30, 41, 'Hỗ trợ phục hồi', 'Rehabilitation, Physical therapy', '5 năm kinh nghiệm', 5, 'APPROVED', true, 180000, 4.7, 21, 27, 16200000, NOW(), NOW(), NOW()),
-(31, 42, 'Điều dưỡng tại gia', 'Nursing, Medical care', '7 năm kinh nghiệm', 7, 'APPROVED', true, 200000, 4.9, 32, 41, 29520000, NOW(), NOW(), NOW()),
-(32, 43, 'Giúp việc nhà và chăm sóc', 'Housekeeping, Companion', '2 năm kinh nghiệm', 2, 'APPROVED', true, 140000, 4.3, 9, 11, 4730000, NOW(), NOW(), NOW()),
-(33, 44, 'Chăm sóc mẹ sau sinh', 'Postpartum care, Child care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 172000, 4.6, 18, 23, 13110000, NOW(), NOW(), NOW()),
-(34, 45, 'Hỗ trợ người khuyết tật', 'Medical care, Rehabilitation', '4 năm kinh nghiệm', 4, 'APPROVED', true, 177000, 4.6, 17, 22, 12980000, NOW(), NOW(), NOW()),
-(35, 46, 'Chăm sóc đa dạng', 'Elderly care, Child care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 168000, 4.5, 15, 19, 10450000, NOW(), NOW(), NOW()),
-(36, 47, 'Y tế cơ bản tại nhà', 'Medical care, Nursing', '5 năm kinh nghiệm', 5, 'APPROVED', true, 190000, 4.7, 22, 28, 18200000, NOW(), NOW(), NOW())
+INSERT INTO caregivers (id, user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(27, 38, 'Chăm sóc người lớn tuổi', 'Elderly care, Companion services', '4 năm kinh nghiệm', 'APPROVED', true, 540000, 4.6, 16, 20, 10800000, NOW(), NOW(), NOW()),
+(28, 39, 'Y tá bệnh viện', 'Nursing, Medical care', '6 năm kinh nghiệm', 'APPROVED', true, 670000, 4.8, 26, 33, 22110000, NOW(), NOW(), NOW()),
+(29, 40, 'Chăm sóc trẻ mầm non', 'Child care, Education', '3 năm kinh nghiệm', 'APPROVED', true, 510000, 4.5, 14, 17, 8670000, NOW(), NOW(), NOW()),
+(30, 41, 'Hỗ trợ phục hồi', 'Rehabilitation, Physical therapy', '5 năm kinh nghiệm', 'APPROVED', true, 600000, 4.7, 21, 27, 16200000, NOW(), NOW(), NOW()),
+(31, 42, 'Điều dưỡng tại gia', 'Nursing, Medical care', '7 năm kinh nghiệm', 'APPROVED', true, 720000, 4.9, 32, 41, 29520000, NOW(), NOW(), NOW()),
+(32, 43, 'Giúp việc nhà và chăm sóc', 'Housekeeping, Companion', '2 năm kinh nghiệm', 'APPROVED', true, 430000, 4.3, 9, 11, 4730000, NOW(), NOW(), NOW()),
+(33, 44, 'Chăm sóc mẹ sau sinh', 'Postpartum care, Child care', '3 năm kinh nghiệm', 'APPROVED', true, 570000, 4.6, 18, 23, 13110000, NOW(), NOW(), NOW()),
+(34, 45, 'Hỗ trợ người khuyết tật', 'Medical care, Rehabilitation', '4 năm kinh nghiệm', 'APPROVED', true, 590000, 4.6, 17, 22, 12980000, NOW(), NOW(), NOW()),
+(35, 46, 'Chăm sóc đa dạng', 'Elderly care, Child care', '3 năm kinh nghiệm', 'APPROVED', true, 550000, 4.5, 15, 19, 10450000, NOW(), NOW(), NOW()),
+(36, 47, 'Y tế cơ bản tại nhà', 'Medical care, Nursing', '5 năm kinh nghiệm', 'APPROVED', true, 650000, 4.7, 22, 28, 18200000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- QUẬN NGŨ HÀNH SƠN (10 caregivers)
@@ -410,17 +410,17 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (48,4), (49,4), (50,4), (51,4), (52,4), (53,4), (54,4), (55,4), (56,4), (57,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
-(37, 48, 'Chuyên chăm sóc người lớn', 'Elderly care, Companion', '4 năm kinh nghiệm', 4, 'APPROVED', true, 172000, 4.6, 17, 21, 11760000, NOW(), NOW(), NOW()),
-(38, 49, 'Điều dưỡng bệnh viện', 'Nursing, Medical care', '6 năm kinh nghiệm', 6, 'APPROVED', true, 200000, 4.8, 27, 35, 24150000, NOW(), NOW(), NOW()),
-(39, 50, 'Chăm sóc trẻ em toàn diện', 'Child care, Education', '3 năm kinh nghiệm', 3, 'APPROVED', true, 165000, 4.5, 15, 19, 10070000, NOW(), NOW(), NOW()),
-(40, 51, 'Phục hồi chức năng chuyên nghiệp', 'Rehabilitation, Physical therapy', '5 năm kinh nghiệm', 5, 'APPROVED', true, 185000, 4.7, 22, 28, 17360000, NOW(), NOW(), NOW()),
-(41, 52, 'Y tá tại nhà', 'Nursing, Medical care', '7 năm kinh nghiệm', 7, 'APPROVED', true, 200000, 4.9, 33, 43, 31820000, NOW(), NOW(), NOW()),
-(42, 53, 'Giúp việc nhà', 'Housekeeping, Companion', '2 năm kinh nghiệm', 2, 'APPROVED', true, 145000, 4.4, 11, 14, 6300000, NOW(), NOW(), NOW()),
-(43, 54, 'Chăm sóc sau sinh', 'Postpartum care, Child care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 175000, 4.6, 19, 24, 14160000, NOW(), NOW(), NOW()),
-(44, 55, 'Hỗ trợ y tế tại nhà', 'Medical care, Rehabilitation', '4 năm kinh nghiệm', 4, 'APPROVED', true, 180000, 4.6, 18, 23, 14030000, NOW(), NOW(), NOW()),
-(45, 56, 'Chăm sóc kép', 'Elderly care, Child care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 170000, 4.5, 16, 20, 11400000, NOW(), NOW(), NOW()),
-(46, 57, 'Y tế gia đình', 'Medical care, Nursing', '5 năm kinh nghiệm', 5, 'APPROVED', true, 195000, 4.7, 23, 29, 19430000, NOW(), NOW(), NOW())
+INSERT INTO caregivers (id, user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(37, 48, 'Chuyên chăm sóc người lớn', 'Elderly care, Companion', '4 năm kinh nghiệm', 'APPROVED', true, 560000, 4.6, 17, 21, 11760000, NOW(), NOW(), NOW()),
+(38, 49, 'Điều dưỡng bệnh viện', 'Nursing, Medical care', '6 năm kinh nghiệm', 'APPROVED', true, 690000, 4.8, 27, 35, 24150000, NOW(), NOW(), NOW()),
+(39, 50, 'Chăm sóc trẻ em toàn diện', 'Child care, Education', '3 năm kinh nghiệm', 'APPROVED', true, 530000, 4.5, 15, 19, 10070000, NOW(), NOW(), NOW()),
+(40, 51, 'Phục hồi chức năng chuyên nghiệp', 'Rehabilitation, Physical therapy', '5 năm kinh nghiệm', 'APPROVED', true, 620000, 4.7, 22, 28, 17360000, NOW(), NOW(), NOW()),
+(41, 52, 'Y tá tại nhà', 'Nursing, Medical care', '7 năm kinh nghiệm', 'APPROVED', true, 740000, 4.9, 33, 43, 31820000, NOW(), NOW(), NOW()),
+(42, 53, 'Giúp việc nhà', 'Housekeeping, Companion', '2 năm kinh nghiệm', 'APPROVED', true, 450000, 4.4, 11, 14, 6300000, NOW(), NOW(), NOW()),
+(43, 54, 'Chăm sóc sau sinh', 'Postpartum care, Child care', '3 năm kinh nghiệm', 'APPROVED', true, 590000, 4.6, 19, 24, 14160000, NOW(), NOW(), NOW()),
+(44, 55, 'Hỗ trợ y tế tại nhà', 'Medical care, Rehabilitation', '4 năm kinh nghiệm', 'APPROVED', true, 610000, 4.6, 18, 23, 14030000, NOW(), NOW(), NOW()),
+(45, 56, 'Chăm sóc kép', 'Elderly care, Child care', '3 năm kinh nghiệm', 'APPROVED', true, 570000, 4.5, 16, 20, 11400000, NOW(), NOW(), NOW()),
+(46, 57, 'Y tế gia đình', 'Medical care, Nursing', '5 năm kinh nghiệm', 'APPROVED', true, 670000, 4.7, 23, 29, 19430000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
 -- QUẬN LIÊN CHIỂU (10 caregivers)
@@ -440,15 +440,15 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 INSERT INTO user_roles VALUES (58,4), (59,4), (60,4), (61,4), (62,4), (63,4), (64,4), (65,4), (66,4), (67,4)
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 
-INSERT INTO caregivers (id, user_id, bio, skills, experience, experience_years, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
-(47, 58, 'Chăm sóc người cao tuổi', 'Elderly care, Companion', '4 năm kinh nghiệm', 4, 'APPROVED', true, 170000, 4.6, 17, 21, 11550000, NOW(), NOW(), NOW()),
-(48, 59, 'Điều dưỡng chuyên nghiệp', 'Nursing, Medical care', '6 năm kinh nghiệm', 6, 'APPROVED', true, 200000, 4.8, 28, 36, 25560000, NOW(), NOW(), NOW()),
-(49, 60, 'Chăm sóc trẻ sơ sinh', 'Child care, Postpartum care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 165000, 4.5, 14, 18, 9720000, NOW(), NOW(), NOW()),
-(50, 61, 'Phục hồi chức năng', 'Rehabilitation, Physical therapy', '5 năm kinh nghiệm', 5, 'APPROVED', true, 185000, 4.7, 23, 29, 18270000, NOW(), NOW(), NOW()),
-(51, 62, 'Y tá bệnh viện', 'Nursing, Medical care', '7 năm kinh nghiệm', 7, 'APPROVED', true, 200000, 4.9, 34, 44, 33000000, NOW(), NOW(), NOW()),
-(52, 63, 'Hỗ trợ sinh hoạt', 'Housekeeping, Companion', '2 năm kinh nghiệm', 2, 'APPROVED', true, 147000, 4.4, 12, 15, 6900000, NOW(), NOW(), NOW()),
-(53, 64, 'Chăm sóc mẹ và bé', 'Postpartum care, Child care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 178000, 4.6, 20, 25, 15000000, NOW(), NOW(), NOW()),
-(54, 65, 'Hỗ trợ y tế', 'Medical care, Rehabilitation', '4 năm kinh nghiệm', 4, 'APPROVED', true, 180000, 4.6, 19, 24, 14880000, NOW(), NOW(), NOW()),
-(55, 66, 'Chăm sóc đa năng', 'Elderly care, Child care', '3 năm kinh nghiệm', 3, 'APPROVED', true, 173000, 4.5, 16, 20, 11600000, NOW(), NOW(), NOW()),
-(56, 67, 'Y tế cơ bản', 'Medical care, Nursing', '5 năm kinh nghiệm', 5, 'APPROVED', true, 195000, 4.7, 24, 30, 20400000, NOW(), NOW(), NOW())
+INSERT INTO caregivers (id, user_id, bio, skills, experience, verification_status, is_available, hourly_rate, rating, total_reviews, completed_bookings, total_earnings, created_at, updated_at, verified_at) VALUES
+(47, 58, 'Chăm sóc người cao tuổi', 'Elderly care, Companion', '4 năm kinh nghiệm', 'APPROVED', true, 550000, 4.6, 17, 21, 11550000, NOW(), NOW(), NOW()),
+(48, 59, 'Điều dưỡng chuyên nghiệp', 'Nursing, Medical care', '6 năm kinh nghiệm', 'APPROVED', true, 710000, 4.8, 28, 36, 25560000, NOW(), NOW(), NOW()),
+(49, 60, 'Chăm sóc trẻ sơ sinh', 'Child care, Postpartum care', '3 năm kinh nghiệm', 'APPROVED', true, 540000, 4.5, 14, 18, 9720000, NOW(), NOW(), NOW()),
+(50, 61, 'Phục hồi chức năng', 'Rehabilitation, Physical therapy', '5 năm kinh nghiệm', 'APPROVED', true, 630000, 4.7, 23, 29, 18270000, NOW(), NOW(), NOW()),
+(51, 62, 'Y tá bệnh viện', 'Nursing, Medical care', '7 năm kinh nghiệm', 'APPROVED', true, 750000, 4.9, 34, 44, 33000000, NOW(), NOW(), NOW()),
+(52, 63, 'Hỗ trợ sinh hoạt', 'Housekeeping, Companion', '2 năm kinh nghiệm', 'APPROVED', true, 460000, 4.4, 12, 15, 6900000, NOW(), NOW(), NOW()),
+(53, 64, 'Chăm sóc mẹ và bé', 'Postpartum care, Child care', '3 năm kinh nghiệm', 'APPROVED', true, 600000, 4.6, 20, 25, 15000000, NOW(), NOW(), NOW()),
+(54, 65, 'Hỗ trợ y tế', 'Medical care, Rehabilitation', '4 năm kinh nghiệm', 'APPROVED', true, 620000, 4.6, 19, 24, 14880000, NOW(), NOW(), NOW()),
+(55, 66, 'Chăm sóc đa năng', 'Elderly care, Child care', '3 năm kinh nghiệm', 'APPROVED', true, 580000, 4.5, 16, 20, 11600000, NOW(), NOW(), NOW()),
+(56, 67, 'Y tế cơ bản', 'Medical care, Nursing', '5 năm kinh nghiệm', 'APPROVED', true, 680000, 4.7, 24, 30, 20400000, NOW(), NOW(), NOW())
 ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
