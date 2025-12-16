@@ -25,7 +25,7 @@ ON DUPLICATE KEY UPDATE name = VALUES(name);
 -- Admin
 INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
 (1, 'admin@careservice.com',
- '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+ '$2a$10$VRZZiWlhiD95e/QiOw5W8uZCibaMKVObo4WrGBKdoqGF3IqMe6v1G',
  'Trần Quốc Khánh',
  'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
  '0901234567', 'Hồ Chí Minh', 'ACTIVE', true, NOW(), NOW())
@@ -37,7 +37,7 @@ ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 -- Support
 INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
 (2, 'support@careservice.com',
- '$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW',
+ '$2a$10$VRZZiWlhiD95e/QiOw5W8uZCibaMKVObo4WrGBKdoqGF3IqMe6v1G',
  'Lê Thị Minh Thảo',
  'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg',
  '0902234567', 'Hồ Chí Minh', 'ACTIVE', true, NOW(), NOW())
@@ -49,7 +49,7 @@ ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 -- Customer
 INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
 (3, 'customer@example.com',
- '$2a$10$DKs.Pii4ggYjGZhkNg3HPu.YdOo3gPqFXQ8HpZ7.hFYhKJFAiQKh6',
+ '$2a$10$VRZZiWlhiD95e/QiOw5W8uZCibaMKVObo4WrGBKdoqGF3IqMe6v1G',
  'Nguyễn Minh An',
  'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg',
  '0903234567', '123 Nguyễn Huệ, Q1, HCMC', 'ACTIVE', true, NOW(), NOW())
@@ -69,7 +69,7 @@ ON DUPLICATE KEY UPDATE user_id = VALUES(user_id);
 -- Caregiver 1
 INSERT INTO users (id, email, password, full_name, avatar_url, phone_number, address, status, enabled, created_at, updated_at) VALUES
 (4, 'caregiver@example.com',
- '$2a$10$P7J1.6mL1PVrZjXGKLTQEujMuCmW3rPJwCgE9vFkrGBXRm/8pW/4O',
+ '$2a$10$VRZZiWlhiD95e/QiOw5W8uZCibaMKVObo4WrGBKdoqGF3IqMe6v1G',
  'Trần Thị Cúc',
  'https://images.pexels.com/photos/532758/pexels-photo-532758.jpeg',
  '0904234567', '456 Lê Lợi, Quận Hải Châu, Đà Nẵng', 'ACTIVE', true, NOW(), NOW())
