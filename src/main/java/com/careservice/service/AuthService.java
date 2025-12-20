@@ -121,6 +121,11 @@ public class AuthService {
         caregiver.setCertificateUrls(request.getCertifications());
         caregiver.setVerificationStatus(Caregiver.VerificationStatus.PENDING);
         caregiver.setIsAvailable(false); // Chưa khả dụng cho đến khi được phê duyệt
+        // Đảm bảo các giá trị thống kê được khởi tạo về 0 cho caregiver mới
+        caregiver.setTotalEarnings(BigDecimal.ZERO);
+        caregiver.setRating(0.0);
+        caregiver.setTotalReviews(0);
+        caregiver.setCompletedBookings(0);
         caregiverRepository.save(caregiver);
         
         // Tạo JWT token
@@ -178,6 +183,12 @@ public class AuthService {
             Caregiver caregiver = new Caregiver();
             caregiver.setUser(savedUser);
             caregiver.setVerificationStatus(Caregiver.VerificationStatus.PENDING);
+            caregiver.setIsAvailable(false);
+            // Đảm bảo các giá trị thống kê được khởi tạo về 0 cho caregiver mới
+            caregiver.setTotalEarnings(BigDecimal.ZERO);
+            caregiver.setRating(0.0);
+            caregiver.setTotalReviews(0);
+            caregiver.setCompletedBookings(0);
             caregiverRepository.save(caregiver);
         } else {
             Customer customer = new Customer();

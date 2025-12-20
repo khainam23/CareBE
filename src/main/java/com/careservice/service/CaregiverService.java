@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -100,7 +101,12 @@ public class CaregiverService {
                 .orElseThrow(() -> new RuntimeException("Caregiver profile not found"));
         
         java.util.Map<String, Object> stats = new java.util.HashMap<>();
-        stats.put("monthlyEarnings", caregiver.getTotalEarnings() != null ? caregiver.getTotalEarnings() : 0);
+        // Đảm bảo totalEarnings luôn là 0 nếu null hoặc chưa có giá trị
+        BigDecimal totalEarnings = caregiver.getTotalEarnings();
+        if (totalEarnings == null) {
+            totalEarnings = BigDecimal.ZERO;
+        }
+        stats.put("monthlyEarnings", totalEarnings);
         stats.put("earningsGrowth", 0.0);
         stats.put("weeklyHours", 0);
         stats.put("todayBookings", 0);
