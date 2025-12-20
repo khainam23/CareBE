@@ -3,11 +3,18 @@ package com.careservice.service;
 import com.careservice.dto.payment.PaymentDTO;
 import com.careservice.dto.payment.PaymentRequest;
 import com.careservice.entity.Booking;
+import com.careservice.entity.Caregiver;
 import com.careservice.entity.Notification;
 import com.careservice.entity.Payment;
+import com.careservice.entity.User;
 import com.careservice.repository.BookingRepository;
+import com.careservice.repository.CaregiverRepository;
 import com.careservice.repository.PaymentRepository;
+import com.careservice.repository.UserRepository;
+import com.careservice.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +30,8 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final BookingRepository bookingRepository;
     private final NotificationService notificationService;
+    private final CaregiverRepository caregiverRepository;
+    private final UserRepository userRepository;
     
     @Transactional
     public PaymentDTO createPayment(PaymentRequest request) {
@@ -117,8 +126,16 @@ public class PaymentService {
     }
     
     public List<PaymentDTO> getCaregiverPayments() {
-        return paymentRepository.findAll().stream()
-                .filter(payment -> payment.getBooking().getCaregiver() != null)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        
+        User user = userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        Caregiver caregiver = caregiverRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Caregiver profile not found"));
+        
+        return paymentRepository.findByCaregiverId(caregiver.getId()).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

@@ -26,4 +26,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     
     @Query("SELECT SUM(p.amount) FROM Payment p WHERE p.status = 'COMPLETED'")
     Double getTotalRevenue();
+    
+    @Query("SELECT p FROM Payment p WHERE p.booking.caregiver.id = :caregiverId")
+    List<Payment> findByCaregiverId(Long caregiverId);
 }
